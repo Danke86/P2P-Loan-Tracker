@@ -12,6 +12,22 @@
   background-size: cover;
   background-position: center;
  }
+
+.input-div{
+    max-width: 1000px;
+  }
+  
+.body-html{
+display: flex;
+flex-direction: column;
+}
+
+.page-content-login{
+display: flex;
+flex-direction: row;
+max-width: 1000px;
+padding: 20px;
+}
  
  .side-bar{
   background: #1b1a1b;
