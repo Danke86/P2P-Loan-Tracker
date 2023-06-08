@@ -1,5 +1,7 @@
-<!-- HEADER OF EVERY PAGE (for the sidebar) -->
-<!-- TO USE: include header.php ?> -->
+
+<!-- HEADER OF EVERY PAGE (for the sidebar)
+TO USE: include header.php ?> -->
+<?php include('../backend/login_checker.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -36,5 +38,3 @@
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>
     </div>
   </div>
-</body>
-</html>
