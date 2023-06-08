@@ -10,7 +10,12 @@
         <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal">PAY FRIEND</button> -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friendModal">ADD EXPENSE</button>
       </div>
-      <table class="table table-hover table-bordered table-str">
+    
+      <div>
+        <input id="friendSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a friend" aria-label="Search" aria-describedby="search-addon" />
+      </div>
+
+      <table id="friendTable" class="table table-hover table-bordered table-str">
         <thead>
           <tr>
             <th>Expense ID</th>
@@ -118,7 +123,12 @@
         <h2>All Expenses Made With A Group</h2>
         <button class="btn btn-primary" id="2" data-bs-toggle="modal" data-bs-target="#groupModal">ADD EXPENSE</button>
       </div>
-      <table class="table table-hover table-bordered table-str">
+
+      <div>
+        <input id="groupSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a group" aria-label="Search" aria-describedby="search-addon" />
+      </div>
+      
+      <table id="groupTable" class="table table-hover table-bordered table-str">
         <thead>
           <tr>
             <th>Expense ID</th>

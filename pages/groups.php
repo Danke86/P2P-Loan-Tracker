@@ -5,7 +5,11 @@
   <h1 id="main_title">GROUPS</h1>
   <div class="container">
     <h2>List of Groups</h2>
-    <table class="table table-hover table-bordered table-str">
+
+    <div>
+      <input id="grouplistSearchInput" type="search" class="form-control rounded" placeholder="Search a group" aria-label="Search" aria-describedby="search-addon" />
+    </div>
+    <table id="grouplistTable" class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Group Name</th>

@@ -23,3 +23,20 @@ h6 {
     text-align: center;
     color: red;
 }
+
+.search-box {
+display: flex;
+align-items: end;
+}
+  
+.search-box input[type="search"] {
+flex-grow: 1;
+border-radius: 0.25rem;
+border-right: none;
+}
+
+.search-box button {
+border-radius: 0 0.25rem 0.25rem 0;
+margin-right: 10px;
+}
+  

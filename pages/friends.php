@@ -5,7 +5,11 @@
   <h1 id="main_title">FRIENDS</h1>
   <div class="container">
     <h2>List of Friends</h2>
-    <table class="table table-hover table-bordered table-str">
+
+    <div>
+      <input id="friendlistSearchInput" type="search" class="form-control rounded" placeholder="Search a friend" aria-label="Search" aria-describedby="search-addon" />
+    </div>
+    <table id="friendlistTable" class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Friend Name</th>

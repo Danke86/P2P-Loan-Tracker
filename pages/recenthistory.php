@@ -5,14 +5,18 @@
     <h1 id="main_title">RECENT HISTORY</h1>
     <div class="container">
       <h2>Recent Expenses Made With A Friend (Within this month)</h2>
-      <table class="table table-hover table-bordered table-str">
+
+      <div>
+        <input id="friendSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a friend" aria-label="Search" aria-describedby="search-addon" />
+      </div>
+      <table id="friendTable" class="table table-hover table-bordered table-str">
         <thead>
           <tr>
             <th>Expense ID</th>
             <th>Expense name</th>
             <th>Date incurred</th>
             <th>Original Amount</th>
-            <th>Amount to be payed</th>
+            <th>Amount to be paid</th>
             <th>Friend</th>
           </tr>
         </thead>
@@ -52,14 +56,18 @@
   </div>
   <div class="container">
       <h2>Recent Expenses Made With A Group</h2>
-      <table class="table table-hover table-bordered table-str">
+
+      <div>
+        <input id="groupSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a group" aria-label="Search" aria-describedby="search-addon" />
+      </div>
+      <table id="groupTable" class="table table-hover table-bordered table-str">
         <thead>
           <tr>
             <th>Expense ID</th>
             <th>Expense name</th>
             <th>Date incurred</th>
             <th>Original Amount</th>
-            <th>Amount to be payed</th>
+            <th>Amount to be paid</th>
             <th>Group</th>
           </tr>
         </thead>
