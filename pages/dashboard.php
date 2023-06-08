@@ -74,14 +74,11 @@
                       $name = mysqli_fetch_assoc($friendResult);
                       echo $name['uname'];
                     ?></td>
-<<<<<<< HEAD
                     <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
                     <td><a href="delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
-=======
                     <td>
                       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal" data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
                     </td>
->>>>>>> 9c8ebcf768688b3983219ddc8ea000fb1464a9ee
                   </tr>
                 <?php
               }
