@@ -4,7 +4,7 @@
     <title>Login - P2P</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/group6_project127/css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/group6_project127/css/loginstyles.css"/>
 
   </head>
   <body>
@@ -13,26 +13,29 @@
         <div class="nav-wrapper teal darken-4">
           <a href="#" class="brand-logo">P2P</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="signup.php">Signup</a></li>
+            <!-- <li><a href="signup.php">Signup</a></li> -->
             
           </ul>
         </div>
       </nav>
       <div class="page-content-login"> 
+        <h3>Log in</h3>
         <div class="input-div">
           <form method="POST" action="backend/login.php" onsubmit="return validation()">
             <div >
               <div class="input-field col s6">
-                <input placeholder="Username" id="username" name="username" type="text" class="validate">
-                <label for="username">Username</label>
+                <input placeholder="Username" id="username" name="username" type="text" class="validate" required>
+                <!-- <label for="username">Username</label> -->
               </div>
               <div class="input-field col s6">
-                <input placeholder="Password" id="password" name="password" type="text" class="validate">
-                <label for="password">Password</label>
+                <input placeholder="Password" id="password" name="password" type="text" class="validate" required>
+                <!-- <label for="password">Password</label> -->
               </div>
-              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-              </button>
+              <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
             </div>
+            <div class="signup-link">
+              <p>Already have an account? <a href="pages/signup.php">Sign up</a> </p>
+
           </form>
         </div>
        
