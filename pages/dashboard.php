@@ -67,7 +67,7 @@
         <tbody>
         <?php
 
-          $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = 001"; //change 001 to $_SESSION[userid]
+          $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id'].""; //change 001 to $_SESSION[userid]
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {

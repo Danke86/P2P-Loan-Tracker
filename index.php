@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <?php
-  //prevent user from accessing page before logging in
-  // session_start();
-  // if ( isset( $_SESSION['user_id'] ) ) {
-  //   header("Location: pages/dashboard.php");
-  // }
+  prevent user from accessing page before logging in
+  session_start();
+  if ( isset( $_SESSION['user_id'] ) ) {
+    header("Location: pages/dashboard.php");
+  }
   ?>
   <head>
     <title>Login - P2P</title>
@@ -41,7 +41,7 @@
               <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
             </div>
             <div class="signup-link">
-              <p>Already have an account? <a href="pages/signup.php">Sign up</a> </p>
+              <p>Don't have an account? <a href="pages/signup.php">Sign up</a> </p>
 
           </form>
         </div>

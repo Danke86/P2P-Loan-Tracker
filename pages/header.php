@@ -31,8 +31,8 @@ TO USE: include header.php ?> -->
       <h1 id="user-email">admin@up.edu.ph</h1>
     </header>
     <div class="menu">
-      <div class="item"><a href="#"><i class="fas fa-desktop"></i>Dashboard</a></div>
-      <div class="item"><a href="#"><i class="fas fa-history"></i>Recent History</a></div>
+      <div class="item"><a href="dashboard.php"><i class="fas fa-desktop"></i>Dashboard</a></div>
+      <div class="item"><a href="recenthistory.php"><i class="fas fa-history"></i>Recent History</a></div>
       <div class="item"><a href="friends.php"><i class="fas fa-user"></i>Friends</a></div>
       <div class="item"><a href="groups.php"><i class="fas fa-users"></i>Groups</a></div>
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>
