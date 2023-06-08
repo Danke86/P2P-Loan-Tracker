@@ -66,7 +66,7 @@
         <tbody>
           <?php
 
-            $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id']." AND `groupid` IS NOT NULL"; //change 001 to $_SESSION[userid]
+            $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id']." AND `groupid` IS NOT NULL AND expense_type = 'group' "; //change 001 to $_SESSION[userid]
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
