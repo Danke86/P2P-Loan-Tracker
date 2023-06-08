@@ -1,6 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('../config.php'); ?>
-
+<?php include('../backend/login_checker.php'); ?>
 
 <section class="main">
   <h1 id="main_title">VIEW EXPENSES</h1>
@@ -20,7 +20,7 @@
         <tbody>
           <?php
 
-            $query = "SELECT * FROM `expenses` NATURAL JOIN `user_incurs_expense` NATURAL JOIN `befriends` WHERE `userid` = 001"; //change 001 to $_SESSION[userid]
+            $query = "SELECT * FROM `expenses` NATURAL JOIN `user_incurs_expense` NATURAL JOIN `befriends` WHERE `userid` = ".$_SESSION['user_id'].""; //change 001 to $_SESSION[userid]
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
