@@ -15,12 +15,12 @@ $deleteResult_userSide = mysqli_query($mysqli, $deleteQuery_userSide);
 $deleteResult_friendSide = mysqli_query($mysqli, $deleteQuery_friendSide);
 
 
-if (!$deleteResult_userSide && $deleteResult_friendSide) {
+if (!$deleteResult_userSide && !$deleteResult_friendSide) {
   die("Delete query failed: " . mysqli_error($mysqli));
 } else {
   echo "Friend removed successfully.";
   // redirect back to the friends page here if desired
-  header("Location: ../pages/friends.php");
+  header("Location: ../pages/groups.php");
   exit();
 }
 ?>
