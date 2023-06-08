@@ -11,6 +11,7 @@
           <th>Group Name</th>
           <th>Member Count</th>
           <th>Group Members</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -57,6 +58,19 @@
                       echo "</ul>";
                     }
                   ?>
+                </td>
+                <td>
+                  <?php if ($memberCount == 1): ?>
+                    <form method="post" action="../backend/delete_group.php">
+                      <input type="hidden" name="groupid" value="<?php echo $groupId; ?>" />
+                      <button type="submit" class="btn btn-danger">Delete Group</button>
+                    </form>
+                  <?php else: ?>
+                    <form method="post" action="../backend/leave_group.php">
+                      <input type="hidden" name="groupid" value="<?php echo $groupId; ?>" />
+                      <button type="submit" class="btn btn-danger">Leave Group</button>
+                    </form>
+                  <?php endif; ?>
                 </td>
               </tr>
               <?php
