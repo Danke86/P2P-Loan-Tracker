@@ -12,8 +12,18 @@
             // $query = "UPDATE `expenses` SET `amount` = `amount` - $amountpaid WHERE expenseid = $expenseid ";
             // $result = mysqli_query($mysqli, $query);
 
+            //check if you are the payer
+            $query = "SELECT payerid FROM expenses WHERE expenseid = $expenseid";
+            $result = mysqli_query($mysqli, $query);
+            $resultid = mysqli_fetch_assoc($result);
+
+            if($resultid['payerid'] == $_SESSION['user_id']){
+                header('location:../pages/dashboard.php?insert_msg=You cannot pay yourself!');
+                exit;
+            }
+
             //check if sobra da payment
-            $query1 = "SELECT (e.amount/2) - COALESCE(SUM(p.amount), 0) AS totaldebt 
+            $query1 = "SELECT (e.amount) - COALESCE(SUM(p.amount), 0) AS totaldebt 
                         FROM expenses AS e 
                         LEFT JOIN payments AS p ON e.expenseid = p.expenseid 
                         WHERE e.expenseid = $expenseid 
@@ -27,9 +37,14 @@
             }
 
             //insert new payment
-            // $query2 = "INSERT INTO `payments`(`amount`, `date_incurred`, `userid`, `expenseid`) VALUES ($amountpaid, NOW(), ".$_POST["user_id"].", $expenseid)";
+            // $query2 = "INSERT INTO `payments`(`amount`, `date_incurred`, `userid`, `expenseid`) VALUES ($amountpaid, NOW(), ".$_SESSION["user_id"].", $expenseid)";
+            $query2 = "INSERT INTO `payments`(`amount`, `date_incurred`, `userid`, `expenseid`) VALUES ($amountpaid, NOW(), ".$_SESSION["user_id"].", $expenseid)";
+            $result2 = mysqli_query($mysqli, $query2);
 
-            if(!$result1) {
+            $query3 = "UPDATE expenses SET amount = amount - $amountpaid WHERE expenseid = $expenseid";
+            $result3 = mysqli_query($mysqli, $query3);
+
+            if(!$result && !$result1 && !$result2 && !$result3) {
                 die("Query Failed".mysqli_error());
             }
             else {

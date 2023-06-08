@@ -42,8 +42,24 @@
                     <td><?php echo $row['original_amount'] ?></td>
                     <td>
                       <?php
-                        $actualamount = $row['amount']/2;
-                        echo $actualamount;
+                        // $actualamount = $row['amount']/2;
+                        // echo $actualamount;
+                        $payer = $row['payerid'];
+                        if($payer == $_SESSION['user_id']){
+                          echo 0;
+                        }else{
+                          $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
+                                              FROM expenses AS e
+                                              LEFT JOIN payments p 
+                                              ON e.expenseid = p.expenseid 
+                                              WHERE e.expenseid = ".$row['expenseid']."
+                                              GROUP BY e.expenseid
+                                            ";
+                          $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
+                          $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
+                          $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
+                          echo $curBal;
+                        }
                       ?>
                       </td>
                     <?php //get friendname using friendid
@@ -199,7 +215,7 @@
 
             <div class="form-group">
               <label for="orig_amount">Original amount</label>
-              <input type="number" name="orig_amount" class="form-control">
+              <input type="number" step=".01" name="orig_amount" class="form-control">
             </div>
 
             <!-- PAYER DROPDOWN -->
@@ -268,10 +284,10 @@
                 <input type="text" name="g_e_name" class="form-control">
               </div>
 
-              <div class="form-group">
-                <label for="orig_amount">Original amount</label>
-                <input type="number" name="g_orig_amount" class="form-control">
-              </div>
+            <div class="form-group">
+              <label for="orig_amount">Original amount</label>
+              <input type="number" step=".01" name="g_orig_amount" class="form-control">
+            </div>
 
               <!-- PAYER DROPDOWN -->
               <?php
@@ -338,7 +354,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="amount_paid_friend">Amount to Pay:</label>
-              <input type="number" name="amount_paid_friend" class="form-control">
+              <input type="number" step=".01" name="amount_paid_friend" class="form-control">
               </div>
 
             </select>
