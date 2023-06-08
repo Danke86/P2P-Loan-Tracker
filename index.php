@@ -13,7 +13,7 @@
         <div class="nav-wrapper teal darken-4">
           <a href="#" class="brand-logo">P2P</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="signup.php">Signup</a></li>
+            <!-- <li><a href="signup.php">Signup</a></li> -->
             
           </ul>
         </div>
@@ -24,16 +24,17 @@
             <div >
               <div class="input-field col s6">
                 <input placeholder="Username" id="username" name="username" type="text" class="validate" required>
-                <label for="username">Username</label>
+                <!-- <label for="username">Username</label> -->
               </div>
               <div class="input-field col s6">
                 <input placeholder="Password" id="password" name="password" type="text" class="validate" required>
-                <label for="password">Password</label>
+                <!-- <label for="password">Password</label> -->
               </div>
               <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
             </div>
             <div class="signup-link">
-              <a href="pages/signup.php">Signup</a>
+              <p>Already have an account? <a href="pages/signup.php">Sign up</a> </p>
+
           </form>
         </div>
        
