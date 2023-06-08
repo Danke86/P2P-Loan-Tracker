@@ -1,5 +1,6 @@
 <?php include('../config.php'); ?>
 <?php
+    session_start();
     if(isset($_POST['add_expense_friend'])) {
         $e_name = $_POST['e_name'];
         $orig_amount = $_POST['orig_amount'];
@@ -16,16 +17,12 @@
         else {
             $amount = $orig_amount / 2;
 
-            $dateQuery = "SELECT now()";
-            $dateResult = mysqli_query($mysqli, $dateQuery);
-            $date = mysqli_fetch_assoc($dateResult);
-
             $current_auto_query = "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'p2p' AND TABLE_NAME = 'expenses'";
             $current_auto_result = mysqli_query($mysqli, $current_auto_query);
             $current_auto = mysqli_fetch_assoc($current_auto_result);
 
-            $query1 = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('friend', '$e_name', ".$date['now()'].", $orig_amount, $amount, '$payer_id', null)";
-            $query2 = "INSERT INTO `user_incurs_expense` (`userid`, `expenseid`) VALUES(".$_SESSION['user_id'].", ".$current_auto['AUTO_INCREMENT']."";
+            $query1 = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('friend', '$e_name', NOW(), $orig_amount, $amount, '$payer_id', null)";
+            $query2 = "INSERT INTO `user_incurs_expense` (`userid`, `expenseid`) VALUES(".$_SESSION['user_id'].", ".$current_auto['AUTO_INCREMENT']." )";
             $query3 = "INSERT INTO `user_incurs_expense` (`userid`, `expenseid`) VALUES('$friend_id', ".$current_auto['AUTO_INCREMENT'].")";
             
             $result = mysqli_query($mysqli, $query1);
