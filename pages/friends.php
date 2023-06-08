@@ -2,19 +2,20 @@
 <?php include('../config.php'); ?>
 
 <section class="main">
-  <h1 id="main_title">FRIENDS AND GROUPS</h1>
+  <h1 id="main_title">FRIENDS</h1>
   <div class="container">
     <h2>List of Friends</h2>
     <table class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Friend Name</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <?php
         $userId = $_SESSION['user_id'];
-        $query = "SELECT u.uname
+        $query = "SELECT u.userid, u.uname
                   FROM users u
                   JOIN befriends b ON u.userid = b.friendid
                   WHERE b.userid = '$userId'";
@@ -26,6 +27,12 @@
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $row['uname'] . "</td>";
+            echo "<td>";
+            echo "<form method='post' action='../backend/remove_friend.php'>";
+            echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
+            echo "<button type='submit' class='btn btn-danger'>Remove</button>";
+            echo "</form>";
+            echo "</td>";
             echo "</tr>";
           }
         }
