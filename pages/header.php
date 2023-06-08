@@ -34,7 +34,7 @@ TO USE: include header.php ?> -->
       <div class="item"><a href="#"><i class="fas fa-desktop"></i>Dashboard</a></div>
       <div class="item"><a href="#"><i class="fas fa-history"></i>Recent History</a></div>
       <div class="item"><a href="friends.php"><i class="fas fa-user"></i>Friends</a></div>
-      <div class="item"><a href="#"><i class="fas fa-users"></i>Groups</a></div>
+      <div class="item"><a href="groups.php"><i class="fas fa-users"></i>Groups</a></div>
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>
     </div>
   </div>
