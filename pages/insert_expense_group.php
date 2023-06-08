@@ -1,3 +1,5 @@
+<?php include('../config.php'); ?>
+<?php include('../backend/login_checker.php'); ?>
 <?php
     if(isset($_POST['add_expense_friend'])) {
         $e_name = $_POST['g_e_name'];
