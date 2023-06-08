@@ -7,11 +7,6 @@
   $password = filter_input(INPUT_POST, 'password');
   $hashedpassword = md5($password);
 
-  echo "<script type='text/javascript'>
-            window.alert('".$hashedpassword."');
-            window.location.href = '../index.php';
-        </script>";
-
   $conn = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
   if($conn === false){
@@ -35,7 +30,7 @@
         window.alert('Login Successful. Redirecting..');
         window.location.href = '../index.php';
         </script>";
-      header('Location: ../html/dashboard.html');
+      header('Location: ../pages/dashboard.php');
       $_SESSION['user_id'] = $row['userid'];
         
     } else {
