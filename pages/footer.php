@@ -18,7 +18,7 @@ TO USE: include footer.php at the bottom of your file-->
        $('.side-bar').removeClass('active');
        $('.menu-btn').css("visibility", "visible");
      });
-   });
+    });
    </script>
  </body>
 </html>
