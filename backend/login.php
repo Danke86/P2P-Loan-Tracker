@@ -32,6 +32,7 @@
         </script>";
       header('Location: ../pages/dashboard.php');
       $_SESSION['user_id'] = $row['userid'];
+      exit;
         
     } else {
         echo "<script type='text/javascript'>
