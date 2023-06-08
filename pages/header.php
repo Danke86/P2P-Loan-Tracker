@@ -38,5 +38,3 @@ TO USE: include header.php ?> -->
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>
     </div>
   </div>
-</body>
-</html>
