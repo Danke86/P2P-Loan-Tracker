@@ -31,6 +31,8 @@
               </div>
               <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
             </div>
+            <div class="signup-link">
+              <a href="../index.php">Log in</a>
           </form>
         </div>
       </div>
