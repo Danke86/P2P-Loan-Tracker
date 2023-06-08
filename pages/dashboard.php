@@ -7,6 +7,7 @@
 
       <div class="box1">
         <h2>All Expenses Made With A Friend</h2>
+        <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal">PAY FRIEND</button> -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friendModal">ADD EXPENSE</button>
       </div>
       <table class="table table-hover table-bordered table-str">
@@ -18,8 +19,12 @@
             <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Friend</th>
+<<<<<<< HEAD
             <th>Update</th>
             <th>Delete</th>
+=======
+            <th>Operations</th>
+>>>>>>> 9c8ebcf768688b3983219ddc8ea000fb1464a9ee
           </tr>
         </thead>
         <tbody>
@@ -33,12 +38,17 @@
             } else {
               while($row = mysqli_fetch_assoc($result)){
                 ?>
-                  <tr>
+                  <tr data-expense-id="<?php echo $row['expenseid']; ?>">
                     <td><?php echo $row['expenseid'] ?></td>
                     <td><?php echo $row['expensename'] ?></td>
                     <td><?php echo $row['date_incurred'] ?></td>
                     <td><?php echo $row['original_amount'] ?></td>
-                    <td><?php echo $row['amount'] ?></td>
+                    <td>
+                      <?php
+                        $actualamount = $row['amount']/2;
+                        echo $actualamount;
+                      ?>
+                      </td>
                     <?php //get friendname using friendid
                       $friendid = $row['friendid'];
                       $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
@@ -48,8 +58,14 @@
                       $name = mysqli_fetch_assoc($friendResult);
                       echo $name['uname'];
                     ?></td>
+<<<<<<< HEAD
                     <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
                     <td><a href="delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
+=======
+                    <td>
+                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal" data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
+                    </td>
+>>>>>>> 9c8ebcf768688b3983219ddc8ea000fb1464a9ee
                   </tr>
                 <?php
               }
@@ -313,6 +329,35 @@
     </div>
   </form>
 
+  <!-- pay friend modal -->
+  <form action="../backend/pay_friend.php" method="POST">
+  <div class="modal fade" id="payfriendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Pay friend</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <input type="hidden" name="expense_id" value="">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="amount_paid_friend">Amount to Pay:</label>
+              <input type="number" name="amount_paid_friend" class="form-control">
+              </div>
+
+            </select>
+          
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-success" name="pay_expense_friend" value="Pay expense">
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
 
 
 
@@ -334,5 +379,18 @@
 </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const payButtons = document.querySelectorAll('[data-bs-target="#payfriendModal"]');
+
+    payButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        const expenseId = this.getAttribute('data-expense-id');
+        const expenseIdInput = document.querySelector('input[name="expense_id"]');
+        expenseIdInput.value = expenseId;
+      });
+    });
+  });
+</script>
 
 <?php include('footer.php'); ?>
