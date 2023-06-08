@@ -4,13 +4,21 @@
     if(isset($_GET['id'])) {
         $expense_id = $_GET['id'];
 
-        $query = "DELETE FROM `expenses` where `expenseid`='$expense_id'";
-        $result = mysqli_query($mysqli, $query);
+        $query3 = "SELECT * FROM `expenses` where `expenseid` = '$expense_id'";
+        $result3 = mysqli_query($mysqli, $query3);
+        $e_amount = mysqli_fetch_assoc($result3);
 
-        if (!$result) {
-            die("Query Failed".mysqli_error());
+        if ($e_amount['amount'] != 0) {
+            header('location:dashboard.php?delete_g_message=Expense cannot be deleted due to unresolved payment.');
         } else {
-            header('location:dashboard.php?delete_g_message=Deleted successfully!');
+            $query = "DELETE FROM `expenses` where `expenseid`='$expense_id'";
+            $result = mysqli_query($mysqli, $query);
+
+            if (!$result) {
+                die("Query Failed".mysqli_error());
+            } else {
+                header('location:dashboard.php?delete_g_message=Deleted successfully!');
+            }
         }
     }
 ?>
