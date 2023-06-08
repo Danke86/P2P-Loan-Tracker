@@ -72,10 +72,17 @@
       }
     ?>
 
-    <!-- get update successful message -->
+    <!-- get updat successful message -->
     <?php
       if(isset($_GET['update_f_message'])) {
         echo "<h6>".$_GET['update_f_message']."</h6>";
+      }
+    ?>
+
+    <!-- get delete successful message -->
+    <?php
+      if(isset($_GET['delete_f_message'])) {
+        echo "<h6>".$_GET['delete_f_message']."</h6>";
       }
     ?>
   </div>
@@ -152,6 +159,13 @@
     <?php
       if(isset($_GET['update_g_message'])) {
         echo "<h6>".$_GET['update_g_message']."</h6>";
+      }
+    ?>
+
+    <!-- get delete successful message -->
+    <?php
+      if(isset($_GET['delete_g_message'])) {
+        echo "<h6>".$_GET['delete_g_message']."</h6>";
       }
     ?>
   </div>
