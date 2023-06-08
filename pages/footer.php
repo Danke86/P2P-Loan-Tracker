@@ -1,6 +1,5 @@
 <!-- FOOTER OF EVERY PAGE (for the sidebar)
 TO USE: include footer.php ?> -->
-<?php include('../backend/login_checker_cmp.php'); ?>
    <script type="text/javascript">
    $(document).ready(function(){
      //jquery for toggle sub menus
