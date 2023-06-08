@@ -19,12 +19,9 @@
             <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Friend</th>
-<<<<<<< HEAD
             <th>Update</th>
             <th>Delete</th>
-=======
             <th>Operations</th>
->>>>>>> 9c8ebcf768688b3983219ddc8ea000fb1464a9ee
           </tr>
         </thead>
         <tbody>
