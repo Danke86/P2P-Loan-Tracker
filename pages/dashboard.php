@@ -24,7 +24,7 @@
         <tbody>
           <?php
 
-            $query = "SELECT * FROM `expenses` NATURAL JOIN `user_incurs_expense` NATURAL JOIN `befriends` WHERE `userid` = 001"; //change 001 to $_SESSION[userid]
+            $query = "SELECT * FROM `expenses` NATURAL JOIN `user_incurs_expense` NATURAL JOIN `befriends` WHERE `userid` = ".$_SESSION['user_id']."";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
@@ -82,7 +82,7 @@
         <tbody>
         <?php
 
-          $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = 001"; //change 001 to $_SESSION[userid]
+          $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id']."";
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {
@@ -145,16 +145,14 @@
 
             <!-- PAYER DROPDOWN -->
             <?php
-              // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
+              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
               $resultNames = mysqli_query($mysqli, $queryNames);
             ?>
 
             <label for="f_payer_names">Select payer</label>
             <select class="form-select" aria-label="Default select example" name="f_payer_names">
               <?php
-                // $queryUsername = "SELECT `uname` FROM `users` WHERE userid=".$_SESSION['user_id']."";
-                $queryUsername = "SELECT * FROM `users` WHERE userid=001";
+                $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
                 $resultName = mysqli_query($mysqli, $queryUsername);
                 
                 //get username of current userid
@@ -170,8 +168,7 @@
             
             <!-- FRIEND DROPDOWN -->
             <?php
-              // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
+              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
               $resultNames = mysqli_query($mysqli, $queryNames);
             ?>
             <label for="friend_names">Select friend</label>
@@ -219,16 +216,14 @@
 
             <!-- PAYER DROPDOWN -->
             <?php
-              // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
+              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
               $resultNames = mysqli_query($mysqli, $queryNames);
             ?>
 
             <label for="g_payer_names">Select payer</label>
             <select class="form-select" name="g_payer_names">
               <?php
-                // $queryUsername = "SELECT `uname` FROM `users` WHERE userid=".$_SESSION['user_id']."";
-                $queryUsername = "SELECT * FROM `users` WHERE userid=001";
+                $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
                 $resultName = mysqli_query($mysqli, $queryUsername);
                 
                 //get username of current userid
@@ -244,8 +239,7 @@
 
             <!-- GROUP DROPDOWN -->
             <?php
-              // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=001"; //change 001 to $_SESSION[user_id]
-              $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = 001"; //change 001 to $_SESSION[user_id]
+              $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = ".$_SESSION['user_id']."";
               $resultGroup = mysqli_query($mysqli, $queryGroup);
             ?>
             <label for="group_names">Select group</label>
