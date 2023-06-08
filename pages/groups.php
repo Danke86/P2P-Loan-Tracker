@@ -1,6 +1,5 @@
 <?php include('header.php'); ?>
 <?php include('../config.php'); ?>
-<?php include('../backend/login_checker.php'); ?>
 
 <section class="main">
   <h1 id="main_title">GROUPS</h1>
