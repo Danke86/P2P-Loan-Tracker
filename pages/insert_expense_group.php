@@ -12,6 +12,7 @@
         $payer_uname == "" || empty($payer_uname) || 
         $group_uname == "" || empty($group_uname)) {
             header('location:dashboard.php?group_message=Please fill in all fields!');
+            exit;
         }
     }
 ?>
