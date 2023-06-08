@@ -18,6 +18,8 @@
             <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Friend</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -42,10 +44,12 @@
                       $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
                       $friendResult = mysqli_query($mysqli, $friendName);
                     ?>
-                    <td><?php 
-                    $name = mysqli_fetch_assoc($friendResult);
-                    echo $name['uname'];
+                    <td><?php //name
+                      $name = mysqli_fetch_assoc($friendResult);
+                      echo $name['uname'];
                     ?></td>
+                    <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
+                    <td><a href="delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
                   </tr>
                 <?php
               }
@@ -67,6 +71,13 @@
         echo "<h6>".$_GET['insert_msg']."</h6>";
       }
     ?>
+
+    <!-- get update successful message -->
+    <?php
+      if(isset($_GET['update_f_message'])) {
+        echo "<h6>".$_GET['update_f_message']."</h6>";
+      }
+    ?>
   </div>
 
   <div class="container">
@@ -83,6 +94,8 @@
             <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Group</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -111,6 +124,8 @@
                     $name = mysqli_fetch_assoc($groupResult);
                     echo $name['groupname'];
                   ?></td>
+                  <td><a href="update_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
+                  <td><a href="delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
                 </tr>
               <?php
             }
@@ -123,6 +138,20 @@
     <?php
       if(isset($_GET['group_message'])) {
         echo "<h6>".$_GET['group_message']."</h6>";
+      }
+    ?>
+
+    <!-- get insert successful message -->
+    <?php
+      if(isset($_GET['group_insert_msg'])) {
+        echo "<h6>".$_GET['group_insert_msg']."</h6>";
+      }
+    ?>
+
+    <!-- get update successful message -->
+    <?php
+      if(isset($_GET['update_g_message'])) {
+        echo "<h6>".$_GET['update_g_message']."</h6>";
       }
     ?>
   </div>
@@ -200,76 +229,95 @@
 
   <!-- Group Modal -->
   <form action="insert_expense_group.php" method="post">
-  <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add expense with a group</h5>
-          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group">
-              <label for="e_name">Expense name</label>
-              <input type="text" name="g_e_name" class="form-control">
-            </div>
+    <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add expense with a group</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label for="e_name">Expense name</label>
+                <input type="text" name="g_e_name" class="form-control">
+              </div>
 
-            <div class="form-group">
-              <label for="orig_amount">Original amount</label>
-              <input type="number" name="g_orig_amount" class="form-control">
-            </div>
+              <div class="form-group">
+                <label for="orig_amount">Original amount</label>
+                <input type="number" name="g_orig_amount" class="form-control">
+              </div>
 
-            <!-- PAYER DROPDOWN -->
-            <?php
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
-              $resultNames = mysqli_query($mysqli, $queryNames);
-            ?>
-
-            <label for="g_payer_names">Select payer</label>
-            <select class="form-select" name="g_payer_names">
+              <!-- PAYER DROPDOWN -->
               <?php
-                $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
-                $resultName = mysqli_query($mysqli, $queryUsername);
-                
-                //get username of current userid
-                $username = mysqli_fetch_assoc($resultName);
-                if ($resultNames->num_rows > 0) {
-                  echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
-                  while ($row = $resultNames->fetch_assoc()) {
-                      echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
-                  }
-              }
+                $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
+                $resultNames = mysqli_query($mysqli, $queryNames);
               ?>
-            </select>
 
-            <!-- GROUP DROPDOWN -->
-            <?php
-              $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = ".$_SESSION['user_id']."";
-              $resultGroup = mysqli_query($mysqli, $queryGroup);
-            ?>
-            <label for="group_names">Select group</label>
-            <select class="form-select" aria-label="Default select example" name="group_names">
-              <?php
-                if ($resultGroup->num_rows > 0) {
-                  while ($row = $resultGroup->fetch_assoc()) {
-                      echo '<option value='.$row['groupid'].'>' . $row['groupname'] . '</option>';
-                  }
+              <label for="g_payer_names">Select payer</label>
+              <select class="form-select" name="g_payer_names">
+                <?php
+                  $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
+                  $resultName = mysqli_query($mysqli, $queryUsername);
+                  
+                  //get username of current userid
+                  $username = mysqli_fetch_assoc($resultName);
+                  if ($resultNames->num_rows > 0) {
+                    echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
+                    while ($row = $resultNames->fetch_assoc()) {
+                        echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
+                    }
                 }
-                
+                ?>
+              </select>
+
+              <!-- GROUP DROPDOWN -->
+              <?php
+                $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = ".$_SESSION['user_id']."";
+                $resultGroup = mysqli_query($mysqli, $queryGroup);
               ?>
-            </select>
+              <label for="group_names">Select group</label>
+              <select class="form-select" aria-label="Default select example" name="group_names">
+                <?php
+                  if ($resultGroup->num_rows > 0) {
+                    while ($row = $resultGroup->fetch_assoc()) {
+                        echo '<option value='.$row['groupid'].'>' . $row['groupname'] . '</option>';
+                    }
+                  }
+                  
+                ?>
+              </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-success" name="add_expense_group" value="Add expense">
+          </div>
+
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <input type="submit" class="btn btn-success" name="add_expense_friend" value="Add expense">
-        </div>
-      </div>
+      </div> 
     </div>
-  </div>
   </form>
 
 
+
+
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Data</h4>
+            </div>
+            <div class="modal-body">
+                <div class="fetched-data"></div> //Here Will show the Data
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 </section>
 
 
