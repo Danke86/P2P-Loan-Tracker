@@ -1,7 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('../config.php'); ?>
 
-
 <section class="main">
   <h1 id="main_title">VIEW EXPENSES</h1>
     <div class="container">
@@ -59,6 +58,13 @@
     <?php
       if(isset($_GET['friend_message'])) {
         echo "<h6>".$_GET['friend_message']."</h6>";
+      }
+    ?>
+
+    <!-- get insert successful message -->
+    <?php
+      if(isset($_GET['insert_msg'])) {
+        echo "<h6>".$_GET['insert_msg']."</h6>";
       }
     ?>
   </div>
@@ -140,7 +146,7 @@
 
             <div class="form-group">
               <label for="orig_amount">Original amount</label>
-              <input type="text" name="orig_amount" class="form-control">
+              <input type="number" name="orig_amount" class="form-control">
             </div>
 
             <!-- PAYER DROPDOWN -->
@@ -211,7 +217,7 @@
 
             <div class="form-group">
               <label for="orig_amount">Original amount</label>
-              <input type="text" name="g_orig_amount" class="form-control">
+              <input type="number" name="g_orig_amount" class="form-control">
             </div>
 
             <!-- PAYER DROPDOWN -->
