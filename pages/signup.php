@@ -27,7 +27,7 @@
                 <!-- <label for="username">Username</label> -->
               </div>
               <div class="input-field col s6">
-                <input placeholder="Password" id="password" name="password" type="text" class="validate" required>
+                <input placeholder="Password" id="password" name="password" type="password" class="validate" required>
                 <!-- <label for="password">Password</label> -->
               </div>
               <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
