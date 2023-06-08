@@ -1,6 +1,7 @@
 
 <!-- HEADER OF EVERY PAGE (for the sidebar)
 TO USE: include header.php ?> -->
+<?php include('../backend/login_checker.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
  <head>
