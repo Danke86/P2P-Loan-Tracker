@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <?php
-  prevent user from accessing page before logging in
+  //prevent user from accessing page before logging in
   session_start();
   if ( isset( $_SESSION['user_id'] ) ) {
     header("Location: pages/dashboard.php");
