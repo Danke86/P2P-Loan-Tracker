@@ -79,7 +79,19 @@
         ?>
       </tbody>
     </table>
+
+    <!-- Create Group Button -->
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#groupModal">Create Group</button>
   </div>
 </section>
+
+<!-- Create Group Modal -->
+<div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="groupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <?php include('../modals/modal_insertGroup.php'); ?>
+    </div>
+  </div>
+</div>
 
 <?php include('footer.php'); ?>
