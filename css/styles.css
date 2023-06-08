@@ -5,13 +5,13 @@
   font-family: "Poppins", sans-serif;
  }
  
- body{
+ /* body{
   min-height: 100vh;
   background: white;
   color: white;
   background-size: cover;
   background-position: center;
- }
+ } */
 
 .input-div{
     max-width: 1000px;
@@ -125,26 +125,26 @@ padding: 20px;
  }
  
  .main{
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 50px;
+  /* height: 100vh; */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  padding: 70px;
  }
  
- .main h1{
-  color: rgba(255, 255, 255, 0.8);
+ /* .main h1{
+  color: black;
   font-size: 60px;
   text-align: center;
   line-height: 80px;
- }
+ } */
  
- @media (max-width: 900px){
+ /* @media (max-width: 900px){
   .main h1{
     font-size: 40px;
     line-height: 60px;
   }
- }
+ } */
  img{
    width: 100px;
    margin: 15px;
