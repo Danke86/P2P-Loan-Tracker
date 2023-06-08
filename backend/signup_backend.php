@@ -22,6 +22,7 @@
       //create user if non exits in db
       $query = "INSERT INTO users (uname, upassword) VALUES('".$newusername."', '".$hashedpassword."')";
       if(mysqli_query($conn, $query)){
+        $_SESSION['user_id'] = $row['userid'];
         echo "<script type='text/javascript'>
 				window.confirm('Account Sucessfully Created');
 				window.location.href = '../pages/dashboard.php';
