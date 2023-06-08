@@ -30,7 +30,7 @@
             echo "<td>";
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
-            echo "<button type='submit' class='btn btn-danger'>Remove</button>";
+            echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
