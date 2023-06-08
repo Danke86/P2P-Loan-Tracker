@@ -11,13 +11,14 @@
     <div class="body-html">
       <nav>
         <div class="nav-wrapper teal darken-4">
-          <a href="#" class="brand-logo"> Signup P2P</a>
+          <a href="#" class="brand-logo">P2P</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <!-- <li><a href="login.php">Login</a></li> -->
           </ul>
         </div>
       </nav>
       <div class="page-content-login"> 
+      <h3>Sign up</h3>
         <div class="input-div">
           <form method="POST" action="backend/signup.php" onsubmit="return validation()">
             <div>
