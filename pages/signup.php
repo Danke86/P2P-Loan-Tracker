@@ -2,10 +2,10 @@
 <html>
   <?php
   //prevent user from accessing page before logging in
-  // session_start();
-  // if ( isset( $_SESSION['user_id'] ) ) {
-  //   header("Location: pages/dashboard.php");
-  // }
+  session_start();
+  if ( isset( $_SESSION['user_id'] ) ) {
+    header("Location: pages/dashboard.php");
+  }
   ?>
   <head>
     <title>Signup - P2P</title>
