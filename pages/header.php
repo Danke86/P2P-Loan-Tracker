@@ -7,7 +7,7 @@ TO USE: include header.php ?> -->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidebar menu With Sub-menus | Using HTML, CSS & JQuery</title>
+  <title>P2P</title>
   <style media="screen">
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
   </style>

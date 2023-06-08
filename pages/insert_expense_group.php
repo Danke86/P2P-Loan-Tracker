@@ -13,6 +13,7 @@
         $payer_id == "" || empty($payer_id) || 
         $group_id == "" || empty($group_id)) {
             header('location:dashboard.php?group_message=Please fill in all fields!');
+            exit();
         }
 
         else {
@@ -22,16 +23,16 @@
 
             // $amount = $orig_amount / $member_count['member_count'];
 
-            // $query = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('group', '$e_name', NOW(), '$orig_amount', '$amount', '$payer_id', '$group_id')";
+            $query = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('group', '$e_name', NOW(), '$orig_amount', '$orig_amount', '$payer_id', '$group_id')";
 
-            // $result = mysqli_query($mysqli, $query);
+            $result = mysqli_query($mysqli, $query);
 
-            // if(!$result) {
-            //     die("Query Failed".mysqli_error());
-            // }
-            // else {
-            //     header('location:dashboard.php?group_insert_msg=Expense has been added successfully!');
-            // }
+            if(!$result) {
+                die("Query Failed".mysqli_error());
+            }
+            else {
+                header('location:dashboard.php?group_insert_msg=Expense has been added successfully!');
+            }
         }
     }
 ?>
