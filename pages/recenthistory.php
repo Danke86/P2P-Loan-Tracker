@@ -27,7 +27,7 @@
                       FROM user_incurs_expense u
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
-                      WHERE u.userid=001 AND MONTH(`date_incurred`) = MONTH(curdate()) AND expense_type = 'friend' "; //change 001 to $_SESSION[userid]
+                      WHERE u.userid=".$_SESSION['user_id']." AND MONTH(`date_incurred`) = MONTH(curdate()) AND expense_type = 'friend' "; //change 001 to $_SESSION[userid]
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {

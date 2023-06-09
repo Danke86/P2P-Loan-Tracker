@@ -36,7 +36,7 @@
                       FROM user_incurs_expense u
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
-                      WHERE u.userid=001";
+                      WHERE u.userid=".$_SESSION['user_id']."";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
