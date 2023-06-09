@@ -17,13 +17,18 @@
         }
 
         else {
-            // $member_count_query = "SELECT * FROM `groups` WHERE groupid=$group_id";
-            // $member_count_result = mysqli_query($mysqli, $member_count_query);
-            // $member_count = mysqli_fetch_assoc($member_count_result);
+            $member_count_query = "SELECT * FROM `groups` WHERE groupid=$group_id";
+            $member_count_result = mysqli_query($mysqli, $member_count_query);
+            $member_count = mysqli_fetch_assoc($member_count_result);
 
-            // $amount = $orig_amount / $member_count['member_count'];
+            if($member_count['member_count'] <= 1){
+                header('location:../pages/dashboard.php?group_message=You dont have friends in the group');
+                exit();
+            }
 
-            $query = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('group', '$e_name', NOW(), '$orig_amount', '$orig_amount', '$payer_id', '$group_id')";
+            $amount = $orig_amount / ($member_count['member_count'] - 1);
+
+            $query = "INSERT INTO `expenses` (`expense_type`, `expensename`, `date_incurred`, `original_amount`, `amount`, `payerid`, `groupid`) VALUES('group', '$e_name', NOW(), '$orig_amount', '$amount', '$payer_id', '$group_id')";
 
             $result = mysqli_query($mysqli, $query);
 
@@ -32,6 +37,7 @@
             }
             else {
                 header('location:../pages/dashboard.php?group_insert_msg=Expense has been added successfully!');
+                exit();
             }
         }
     }
