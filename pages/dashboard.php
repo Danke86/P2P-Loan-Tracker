@@ -40,7 +40,7 @@
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
-              die("query failed".mysqli_error());
+              die("query failed".mysqli_error($mysqli));
             } else {
               while($row = mysqli_fetch_assoc($result)){
                 ?>
@@ -166,7 +166,7 @@
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {
-            die("query failed".mysqli_error());
+            die("query failed".mysqli_error($mysqli));
           } else {
             while($row = mysqli_fetch_assoc($result)){
               ?>

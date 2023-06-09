@@ -42,7 +42,7 @@
             $users_in_group_query = "SELECT userid FROM is_member_of i WHERE groupid = $group_id";
             $result1 = mysqli_query($mysqli, $users_in_group_query);
             if(!$result1){
-                die("Query Failed".mysqli_error());
+                die("Query Failed".mysqli_error($mysqli));
             }
 
             //insert into user_incurs_expenses this expense for every user in the group
@@ -53,7 +53,7 @@
             
 
             if(!$result) {
-                die("Query Failed".mysqli_error());
+                die("Query Failed".mysqli_error($mysqli));
             }
             else {
                 header('location:../pages/dashboard.php?group_insert_msg=Expense has been added successfully!');
