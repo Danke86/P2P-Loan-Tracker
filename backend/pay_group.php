@@ -1,8 +1,8 @@
 <?php include('../config.php'); ?>
 <?php include('../backend/login_checker.php'); ?>
 <?php 
-    if(isset($_POST['expense_id'])&&isset($_POST['amount_paid_group'])){
-        $expenseid = $_POST['expense_id'];
+    if(isset($_POST['expense_id_group'])&&isset($_POST['amount_paid_group'])){
+        $expenseid = $_POST['expense_id_group'];
         $amountpaid = $_POST['amount_paid_group'];
 
         if($expenseid == "" || empty($expenseid) || 
@@ -68,7 +68,7 @@
         }
 
     }else{
-        header('location:dashboard.php?group_message=Please fill in all fields!');
+        header('location:../dashboard.php?group_message=Please fill in all fields!');
         exit;
     }
 ?>

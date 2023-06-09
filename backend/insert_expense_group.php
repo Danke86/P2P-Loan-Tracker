@@ -1,7 +1,6 @@
 <?php include('../config.php'); ?>
 <?php include('../backend/login_checker.php'); ?>
 <?php
-    session_start();
     if(isset($_POST['add_expense_group'])) {
         $e_name = $_POST['g_e_name'];
         $orig_amount = $_POST['g_orig_amount'];
@@ -42,7 +41,7 @@
             //gets all users in group
             $users_in_group_query = "SELECT userid FROM is_member_of i WHERE groupid = $group_id";
             $result1 = mysqli_query($mysqli, $users_in_group_query);
-            if(!$result2){
+            if(!$result1){
                 die("Query Failed".mysqli_error());
             }
 
