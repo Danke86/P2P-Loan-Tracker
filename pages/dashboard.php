@@ -482,23 +482,6 @@
     </div>
   </form>
 
-  <!-- <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit Data</h4>
-        </div>
-        <div class="modal-body">
-          <div class="fetched-data"></div> //Here Will show the Data
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <!-- pay group modal -->
   <form action="../backend/pay_group.php" method="POST">
     <div class="modal fade" id="paygroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

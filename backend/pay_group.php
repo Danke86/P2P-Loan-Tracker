@@ -36,7 +36,6 @@
                 exit;
             }
 
-
             //check if sobra da payment
             $query1 = "SELECT (e.amount) - COALESCE(SUM(p.amount), 0) AS totaldebt 
                         FROM expenses AS e 
@@ -46,7 +45,7 @@
             $result1 = mysqli_query($mysqli, $query1);
             $debt = mysqli_fetch_assoc($result1);
 
-            if($debt['totaldebt']/($memcount - 1)< $amountpaid){
+            if($debt['totaldebt'] < $amountpaid){
                 header('location:../pages/dashboard.php?group_message=Amount is over your debt!');
                 exit;
             }
@@ -56,10 +55,10 @@
             $query2 = "INSERT INTO `payments`(`amount`, `date_incurred`, `userid`, `expenseid`) VALUES ($amountpaid, NOW(), ".$_SESSION["user_id"].", $expenseid)";
             $result2 = mysqli_query($mysqli, $query2);
 
-            $query3 = "UPDATE expenses SET amount = amount - $amountpaid WHERE expenseid = $expenseid";
-            $result3 = mysqli_query($mysqli, $query3);
+            // $query3 = "UPDATE expenses SET amount = amount - $amountpaid WHERE expenseid = $expenseid";
+            // $result3 = mysqli_query($mysqli, $query3);
 
-            if(!$result && !$result1 && !$result2 && !$result3) {
+            if(!$result && !$result1 && !$result2) {
                 die("Query Failed".mysqli_error());
             }
             else {
