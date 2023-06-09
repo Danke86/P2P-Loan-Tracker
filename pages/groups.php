@@ -64,6 +64,8 @@
                   ?>
                 </td>
                 <td>
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $groupId; ?>">Edit</button>
+
                   <?php if ($memberCount == 1): ?>
                     <form method="post" action="../backend/delete_group.php">
                       <input type="hidden" name="groupid" value="<?php echo $groupId; ?>" />
@@ -77,6 +79,7 @@
                   <?php endif; ?>
                 </td>
               </tr>
+              <?php include('../modals/modal_editGroup.php'); ?>
               <?php
             }
           }
