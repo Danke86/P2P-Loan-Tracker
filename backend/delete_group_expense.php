@@ -15,7 +15,7 @@
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
-                die("Query Failed".mysqli_error());
+                die("Query Failed".mysqli_error($mysqli));
             } else {
                 header('location:../pages/dashboard.php?delete_g_message=Deleted successfully!');
             }
