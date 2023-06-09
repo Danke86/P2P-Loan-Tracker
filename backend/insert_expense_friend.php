@@ -12,7 +12,7 @@
             $orig_amount == "" || empty($orig_amount) || 
             $payer_id == "" || empty($payer_id) || 
             $friend_id == "" || empty($friend_id)) {
-            header('location:dashboard.php?friend_message=Please fill in all fields!');
+            header('location:../pages/dashboard.php?friend_message=Please fill in all fields!');
             exit;
         } 
 
@@ -34,7 +34,7 @@
                 die("Query Failed".mysqli_error());
             }
             else {
-                header('location:dashboard.php?insert_msg=Expense has been added successfully!');
+                header('location:../pages/dashboard.php?insert_msg=Expense has been added successfully!');
                 exit;
             }
 

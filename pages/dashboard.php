@@ -32,7 +32,11 @@
         <tbody>
           <?php
 
-            $query = "SELECT * FROM `expenses` NATURAL JOIN `user_incurs_expense` NATURAL JOIN `befriends` WHERE `userid` = ".$_SESSION['user_id']."";
+            $query = "SELECT u.userid 'userid', e.userid 'friendid', p.expenseid 'expenseid', expense_type, expensename, date_incurred, original_amount, amount, payerid, groupid
+                      FROM user_incurs_expense u
+                      JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
+                      JOIN expenses p on u.expenseid=p.expenseid
+                      WHERE u.userid=001";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
@@ -74,18 +78,22 @@
               ?>
           </td>
           <?php //get friendname using friendid
-                      $friendid = $row['friendid'];
-                      $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
-                      $friendResult = mysqli_query($mysqli, $friendName);
-                    ?>
+              $friendid = $row['friendid'];
+              $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
+              $friendResult = mysqli_query($mysqli, $friendName);
+            ?>
           <td>
             <?php //name
                       $name = mysqli_fetch_assoc($friendResult);
                       echo $name['uname'];
                     ?>
           </td>
-          <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
-          <td><a href="delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
+          <td>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button>
+          </td>
+          <!-- <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td> -->
+          <td><a href="../backend/delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
           <td>
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal"
               data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
@@ -220,8 +228,9 @@
                     echo $name['groupname'];
                   ?>
           </td>
-          <td><a href="update_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td>
-          <td><a href="delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
+          <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button></td>
+          <td><a href="../backend/delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
           <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paygroupModal"
               data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button></td>
 
@@ -262,8 +271,12 @@
     ?>
   </div>
 
+
+
+  <!-- MODALS -->
+
   <!-- Friend Modal -->
-  <form action="insert_expense_friend.php" method="post">
+  <form action="../backend/insert_expense_friend.php" method="post">
     <div class="modal fade" id="friendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -335,7 +348,7 @@
   </form>
 
   <!-- Group Modal -->
-  <form action="insert_expense_group.php" method="post">
+  <form action="../backend/insert_expense_group.php" method="post">
     <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -348,7 +361,7 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="e_name">Expense name</label>
+              <label for="g_e_name">Expense name</label>
               <input type="text" name="g_e_name" class="form-control">
             </div>
 
@@ -407,6 +420,35 @@
     </div>
   </form>
 
+  <!-- update friend expense modal -->
+  <form action="../backend/update_expense.php" method="POST">
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update expense</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <input type="hidden" name="expense_id" value="">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="update_friend_ename">New expense name:</label>
+              <input type="text" step=".01" name="update_friend_ename" class="form-control">
+            </div>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-success" name="update_expense_friend" value="Update">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
   <!-- pay friend modal -->
   <form action="../backend/pay_friend.php" method="POST">
     <div class="modal fade" id="payfriendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -438,7 +480,7 @@
     </div>
   </form>
 
-  <div class="modal fade" id="myModal" role="dialog">
+  <!-- <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -453,7 +495,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- pay group modal -->
   <form action="../backend/pay_group.php" method="POST">
@@ -485,7 +527,6 @@
       </div>
     </div>
   </form>
-
 </section>
 
 <script>
@@ -500,6 +541,7 @@
       });
     });
   });
+
   document.addEventListener('DOMContentLoaded', function () {
     const payButtonsgroup = document.querySelectorAll('[data-bs-target="#paygroupModal"]');
 
@@ -511,6 +553,21 @@
       });
     });
   });
+
+  // update friend/group expense name using modal
+  document.addEventListener('DOMContentLoaded', function () {
+    const updateButtons = document.querySelectorAll('[data-bs-target="#updateModal"]');
+
+    updateButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        const expenseId = this.getAttribute('data-expense-id');
+        const expenseIdInput = document.querySelector('input[name="expense_id"]');
+        expenseIdInput.value = expenseId;
+      });
+    });
+  });
+
+  
 </script>
 
 <?php include('footer.php'); ?>

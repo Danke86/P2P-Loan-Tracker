@@ -23,7 +23,11 @@
         <tbody>
           <?php
 
-            $query = "SELECT * FROM `user_incurs_expense` NATURAL JOIN `expenses` NATURAL JOIN `befriends` WHERE `userid` = ".$_SESSION['user_id']." AND MONTH(`date_incurred`) = MONTH(curdate()) AND expense_type = 'friend' "; //change 001 to $_SESSION[userid]
+            $query = "SELECT u.userid 'userid', e.userid 'friendid', p.expenseid 'expenseid', expense_type, expensename, date_incurred, original_amount, amount, payerid, groupid
+                      FROM user_incurs_expense u
+                      JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
+                      JOIN expenses p on u.expenseid=p.expenseid
+                      WHERE u.userid=001 AND MONTH(`date_incurred`) = MONTH(curdate()) AND expense_type = 'friend' "; //change 001 to $_SESSION[userid]
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {

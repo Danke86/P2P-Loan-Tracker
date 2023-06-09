@@ -9,7 +9,7 @@
         $e_amount = mysqli_fetch_assoc($result3);
 
         if ($e_amount['amount'] != 0) {
-            header('location:dashboard.php?delete_g_message=Expense cannot be deleted due to unresolved payment.');
+            header('location:../pages/dashboard.php?delete_g_message=Expense cannot be deleted due to unresolved payment.');
         } else {
             $query = "DELETE FROM `expenses` where `expenseid`='$expense_id'";
             $result = mysqli_query($mysqli, $query);
@@ -17,7 +17,7 @@
             if (!$result) {
                 die("Query Failed".mysqli_error());
             } else {
-                header('location:dashboard.php?delete_g_message=Deleted successfully!');
+                header('location:../pages/dashboard.php?delete_g_message=Deleted successfully!');
             }
         }
     }

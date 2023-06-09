@@ -12,7 +12,7 @@
         $orig_amount == "" || empty($orig_amount) || 
         $payer_id == "" || empty($payer_id) || 
         $group_id == "" || empty($group_id)) {
-            header('location:dashboard.php?group_message=Please fill in all fields!');
+            header('location:../pages/dashboard.php?group_message=Please fill in all fields!');
             exit();
         }
 
@@ -31,7 +31,7 @@
                 die("Query Failed".mysqli_error());
             }
             else {
-                header('location:dashboard.php?group_insert_msg=Expense has been added successfully!');
+                header('location:../pages/dashboard.php?group_insert_msg=Expense has been added successfully!');
             }
         }
     }
