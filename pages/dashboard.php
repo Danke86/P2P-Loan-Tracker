@@ -61,7 +61,7 @@
             <?php
                 $payer = $row['payerid'];
                 if($payer == $_SESSION['user_id']){
-                  echo 0;
+                  echo 0.00;
                 }else{
                   $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
                                       FROM expenses AS e
@@ -187,7 +187,7 @@
             <?php 
               $payer = $row['payerid'];
               if($payer == $_SESSION['user_id']){
-                echo 0;
+                echo 0.00;
               }else{
                 $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
                                     FROM expenses AS e
@@ -200,19 +200,19 @@
                 $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
 
                 //get group id
-                $querygroupid = "SELECT groupid FROM expenses WHERE expenseid = ".$row['expenseid']."";
-                $resultgroupid = mysqli_query($mysqli, $querygroupid);
-                $groupidrows = mysqli_fetch_assoc($resultgroupid);
-                $groupid = $groupidrows['groupid'];
+                // $querygroupid = "SELECT groupid FROM expenses WHERE expenseid = ".$row['expenseid']."";
+                // $resultgroupid = mysqli_query($mysqli, $querygroupid);
+                // $groupidrows = mysqli_fetch_assoc($resultgroupid);
+                // $groupid = $groupidrows['groupid'];
                 
                 //get member_count
-                $querymemcount = "SELECT member_count FROM groups WHERE groupid = $groupid";
-                $resultmemcount = mysqli_query($mysqli, $querymemcount);
-                $memcountrows = mysqli_fetch_assoc($resultmemcount);
-                $memcount = $memcountrows['member_count'];
+                // $querymemcount = "SELECT member_count FROM groups WHERE groupid = $groupid";
+                // $resultmemcount = mysqli_query($mysqli, $querymemcount);
+                // $memcountrows = mysqli_fetch_assoc($resultmemcount);
+                // $memcount = $memcountrows['member_count'];
 
 
-                $curBal = ($row['original_amount']) - $totalPaid['totalpaid'];
+                $curBal = ($row['amount']) - $totalPaid['totalpaid'];
                 echo $curBal;
               }
              ?>
@@ -372,20 +372,22 @@
 
             <!-- PAYER DROPDOWN -->
             <?php
-                $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
+                // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
+                $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
                 $resultNames = mysqli_query($mysqli, $queryNames);
+                //change from friends to group memebrs instead
               ?>
 
             <label for="g_payer_names">Select payer</label>
             <select class="form-select" name="g_payer_names">
               <?php
-                  $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
-                  $resultName = mysqli_query($mysqli, $queryUsername);
+                  // $queryUsername = "SELECT * FROM `users` NATURAL JOIN `is_member_of` WHERE userid=".$_SESSION['user_id']." AND  ";
+                  // $resultName = mysqli_query($mysqli, $queryUsername);
                   
                   //get username of current userid
-                  $username = mysqli_fetch_assoc($resultName);
+                  // $username = mysqli_fetch_assoc($resultName);
                   if ($resultNames->num_rows > 0) {
-                    echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
+                    // echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
                     while ($row = $resultNames->fetch_assoc()) {
                         echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
                     }
@@ -461,7 +463,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <input type="hidden" name="expense_id" value="">
+          <input type="hidden" name="expense_id_friend" value="">
           <div class="modal-body">
             <div class="form-group">
               <label for="amount_paid_friend">Amount to Pay:</label>
@@ -509,7 +511,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <input type="hidden" name="expense_id" value="">
+          <input type="hidden" name="expense_id_group" value="">
           <div class="modal-body">
             <div class="form-group">
               <label for="amount_paid_group">Amount to Pay:</label>
@@ -536,7 +538,7 @@
     payButtons.forEach(function (button) {
       button.addEventListener('click', function () {
         const expenseId = this.getAttribute('data-expense-id');
-        const expenseIdInput = document.querySelector('input[name="expense_id"]');
+        const expenseIdInput = document.querySelector('input[name="expense_id_friend"]');
         expenseIdInput.value = expenseId;
       });
     });
@@ -548,7 +550,7 @@
     payButtonsgroup.forEach(function (button) {
       button.addEventListener('click', function () {
         const expenseId = this.getAttribute('data-expense-id');
-        const expenseIdInput = document.querySelector('input[name="expense_id"]');
+        const expenseIdInput = document.querySelector('input[name="expense_id_group"]');
         expenseIdInput.value = expenseId;
       });
     });
