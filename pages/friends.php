@@ -49,13 +49,13 @@
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
             echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
-            echo "<button type='button' class='btn btn-primary add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal' data-groupid='" . $row['userid'] . "'>Add to Group</button>";
+            echo "<button type='button' class='btn btn-primary add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal-" . $row['userid'] . "'>Add to Group</button>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
 
             // Add modal for each friend
-            echo "<div class='modal fade' id='addToGroupModal' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
+            echo "<div class='modal fade' id='addToGroupModal-" . $row['userid'] . "' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>";
             echo "<div class='modal-dialog' role='document'>";
             echo "<div class='modal-content'>";
             echo "<div class='modal-header'>";
@@ -63,8 +63,10 @@
             echo "<button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>";
             echo "</div>";
             echo "<div class='modal-body'>";
+            echo "<form method='post' action='../backend/add_to_group.php'>";
+            echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
             echo "<label for='groupSelect'>Select Group</label>";
-            echo "<select class='form-select' id='groupSelect' name='groupSelect'>";
+            echo "<select class='form-select' id='groupSelect' name='groupid'>";
             
             $friendId = $row['userid'];
             $queryGroups = "SELECT g.groupid, g.groupname
@@ -76,17 +78,18 @@
 
             if (!$resultGroups) {
               die("Query failed: " . mysqli_error($mysqli));
-            }
-
-            while ($groupRow = mysqli_fetch_assoc($resultGroups)) {
-              echo "<option value='" . $groupRow['groupid'] . "'>" . $groupRow['groupname'] . "</option>";
+            } else {
+              while ($groupRow = mysqli_fetch_assoc($resultGroups)) {
+                echo "<option value='" . $groupRow['groupid'] . "'>" . $groupRow['groupname'] . "</option>";
+              }
             }
 
             echo "</select>";
             echo "</div>";
             echo "<div class='modal-footer'>";
             echo "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>";
-            echo "<button type='button' class='btn btn-primary' id='addToGroupBtn'>Add to Group</button>";
+            echo "<button type='submit' class='btn btn-primary'>Add</button>";
+            echo "</form>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
@@ -105,23 +108,21 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add friend</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add Friend</h5>
           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <!-- NOT FRIEND DROPDOWN -->
-          <?php
-          $queryNames = "SELECT * from users where userid not in (SELECT u.userid FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=" . $_SESSION['user_id'] . ") and userid!=" . $_SESSION['user_id'] . "";
-          $resultNames = mysqli_query($mysqli, $queryNames);
-          ?>
-          <label for="notfriend_names">Select user</label>
+          <label for="notfriend_names">Select User</label>
           <select class="form-select" aria-label="Default select example" name="notfriend_names">
             <?php
+            $queryNames = "SELECT * FROM users WHERE userid NOT IN (SELECT u.userid FROM users u JOIN befriends b ON u.userid = b.friendid WHERE b.userid = " . $_SESSION['user_id'] . ") AND userid != " . $_SESSION['user_id'];
+            $resultNames = mysqli_query($mysqli, $queryNames);
+
             if ($resultNames->num_rows > 0) {
               while ($row = $resultNames->fetch_assoc()) {
-                echo '<option value=' . $row['userid'] . '>' . $row['uname'] . '</option>';
+                echo '<option value="' . $row['userid'] . '">' . $row['uname'] . '</option>';
               }
             }
             ?>
@@ -144,32 +145,6 @@
       var value = $(this).val().toLowerCase();
       $("#friendlistTable tbody tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
-    });
-
-    // Add to Group Modal
-    $(".add-to-group-btn").click(function() {
-      var friendId = $(this).data('friendid');
-      var groupId = $(this).data('groupid');
-      $("#addToGroupModal").find('#groupSelect').val(groupId);
-      $("#addToGroupModal").find('#addToGroupBtn').attr('data-friendid', friendId);
-    });
-
-    // Add to Group Button
-    $("#addToGroupBtn").click(function() {
-      var friendId = $(this).data('friendid');
-      var groupId = $("#addToGroupModal").find('#groupSelect').val();
-      $.ajax({
-        type: "POST",
-        url: "../backend/add_to_group.php",
-        data: {
-          friendid: friendId,
-          groupid: groupId
-        },
-        success: function(response) {
-          alert(response);
-          location.reload();
-        }
       });
     });
   });
