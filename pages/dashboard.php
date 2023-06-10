@@ -112,7 +112,9 @@
             <?php echo $row['expensename'] ?>
           </td>
           <td>
-            <?php echo $row['date_incurred'] ?>
+            <?php
+            $date = date_create($row['date_incurred']);
+            echo date_format($date,"M d, Y h:i a"); ?>
           </td>
           <td>
             <?php echo $row['original_amount'] ?>
@@ -246,7 +248,8 @@
             <?php echo $row['expensename'] ?>
           </td>
           <td>
-            <?php echo $row['date_incurred'] ?>
+            <?php $date = date_create($row['date_incurred']);
+            echo date_format($date,"M d, Y h:i a"); ?>
           </td>
           <td>
             <?php echo $row['original_amount'] ?>
@@ -429,25 +432,6 @@
               <input type="number" step=".01" name="g_orig_amount" class="form-control">
             </div>
 
-            <!-- PAYER DROPDOWN
-            <?php
-                // $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
-                // $resultNames = mysqli_query($mysqli, $queryNames);
-                //change from friends to group memebrs instead
-              ?>
-
-            <label for="g_payer_names">Select payer</label>
-            <select class="form-select" name="g_payer_names">
-              <?php                 
-                  //get username of current userid
-                //   if ($resultNames->num_rows > 0) {
-                //         while ($row = $resultNames->fetch_assoc()) {
-                //         echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
-                //     }
-                // }
-                ?>
-            </select> -->
-
             <!-- GROUP DROPDOWN -->
             <?php
                 $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = ".$_SESSION['user_id']."";
@@ -461,8 +445,7 @@
                     while ($row = $resultGroup->fetch_assoc()) {
                         echo '<option value='.$row['groupid'].'>' . $row['groupname'] . '</option>';
                     }
-                  }
-                  
+                  }                  
                 ?>
             </select>
 

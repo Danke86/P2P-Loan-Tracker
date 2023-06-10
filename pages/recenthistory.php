@@ -46,7 +46,8 @@
             <?php echo $row['expensename'] ?>
           </td>
           <td>
-            <?php echo $row['date_incurred'] ?>
+          <?php $date = date_create($row['date_incurred']);
+            echo date_format($date,"M d, Y h:i a"); ?>
           </td>
           <td>
             <?php echo $row['original_amount'] ?>
@@ -148,7 +149,8 @@
             <?php echo $row['expensename'] ?>
           </td>
           <td>
-            <?php echo $row['date_incurred'] ?>
+          <?php $date = date_create($row['date_incurred']);
+            echo date_format($date,"M d, Y h:i a"); ?>
           </td>
           <td>
             <?php echo $row['original_amount'] ?>
