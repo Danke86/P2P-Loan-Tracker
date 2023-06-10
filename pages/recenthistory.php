@@ -65,7 +65,7 @@
                                     ";
                   $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
                   $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
-                  $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
+                  $curBal = $row['amount'] - $totalPaid['totalpaid'];
                   // echo $curBal;
                   if($curBal > 0){
                     echo "<span class='negative-bal-text'> $curBal </span>";
