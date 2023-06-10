@@ -32,7 +32,7 @@ TO USE: include header.php ?> -->
       <div class="close-btn">
         <i class="fas fa-times"></i>
       </div>
-      <img src="https://lh3.googleusercontent.com/a-/AOh14Gj99VObFyE8W_h8RrcwZO_aYiIHu5AAa_XpnOym=s600-k-no-rp-mo" alt="">
+      <img src="../images/p2p-noborder.png" alt="">
       <h1 id="user-email">
         <?php
           $query = "SELECT * FROM `users` WHERE `userid` = ".$_SESSION['user_id']."";
