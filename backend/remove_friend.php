@@ -20,7 +20,7 @@ if (!$deleteResult_userSide && !$deleteResult_friendSide) {
 } else {
   echo "Friend removed successfully.";
   // redirect back to the friends page here if desired
-  header("Location: ../pages/groups.php");
+  header("Location: ../pages/friends.php");
   exit();
 }
 ?>
