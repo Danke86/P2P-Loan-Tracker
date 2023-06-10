@@ -28,7 +28,7 @@
                       JOIN expenses p on u.expenseid=p.expenseid
                       WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend'
                       AND p.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()
-                      ORDER BY e.date_incurred ASC
+                      ORDER BY p.date_incurred DESC
                       ";
             $result = mysqli_query($mysqli, $query);
 
@@ -119,7 +119,7 @@
                     JOIN `user_incurs_expense` u ON e.expenseid = u.expenseid
                     WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'
                     AND e.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()
-                    ORDER BY e.date_incurred ASC
+                    ORDER BY e.date_incurred DESC
                     ";
           $result = mysqli_query($mysqli, $query);
 
