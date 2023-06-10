@@ -270,6 +270,48 @@
     ?>
   </div>
 
+  <div class="box1">
+  <h2>View Current Balance from all Expenses</h2>
+  </div>
+  <table class="table table-hover table-bordered table-str">
+    <thead>
+      <tr>
+        <th>Amount you owe</th>
+        <th>Amount owed to you</th>    
+        <th>Current Balance</th>          
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <?php 
+          $curbalQuery1 = "SELECT sum(amount)-(SELECT sum(amount) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
+          $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
+        ?>
+        <td>
+          <?php //utang mo
+            $curbal1 = mysqli_fetch_assoc($curbalResult1);
+            echo $curbal1['curbal'];
+          ?>
+        </td>
+        <?php 
+          $curbalQuery2 = "SELECT sum(amount)-(SELECT sum(amount) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
+          $curbalResult2 = mysqli_query($mysqli, $curbalQuery2);
+        ?>
+        <td>
+          <?php //get groupname using groupid
+            $curbal2 = mysqli_fetch_assoc($curbalResult2);
+            echo $curbal2['curbal'];
+          ?>
+        </td> 
+        <td>
+          <?php //get groupname using groupid
+            $curbal = (-$curbal1['curbal'])+$curbal2['curbal'];
+            echo $curbal;
+          ?>
+        </td>  
+      </tr>
+    </tbody>
+  </table>
 
 
   <!-- MODALS -->
@@ -392,7 +434,7 @@
             <select class="payer form-select" name="g_payer_names">
               <option value="" selected="selected">Select payer</option>
             </select>
-            
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
