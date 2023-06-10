@@ -20,6 +20,21 @@ TO USE: include footer.php at the bottom of your file-->
      });
     });
 
+    // get payer names after selecting a group
+    $(document).ready(function(){
+      $(".group").change(function(){
+        var groupid = $(this).val();
+        $.ajax({
+          url: "get_payer.php",
+          method: "POST",
+          data: {groupid: groupid},
+          success: function(data) {
+            $(".payer").html(data);
+          }
+        });
+      });
+    });
+
     $(document).ready(function() {
       // Attach event listener to search input field
       $('#groupSearchInput').on('keyup', function() {
