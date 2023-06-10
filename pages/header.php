@@ -1,6 +1,7 @@
 <!-- HEADER OF EVERY PAGE (for the sidebar)
 TO USE: include header.php ?> -->
 <?php include('../backend/login_checker.php'); ?>
+<?php include('../config.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -17,6 +18,7 @@ TO USE: include header.php ?> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
   <link rel="stylesheet" href="../css/styles.css">
   </head>
@@ -31,11 +33,18 @@ TO USE: include header.php ?> -->
         <i class="fas fa-times"></i>
       </div>
       <img src="https://lh3.googleusercontent.com/a-/AOh14Gj99VObFyE8W_h8RrcwZO_aYiIHu5AAa_XpnOym=s600-k-no-rp-mo" alt="">
-      <h1 id="user-email">admin@up.edu.ph</h1>
+      <h1 id="user-email">
+        <?php
+          $query = "SELECT * FROM `users` WHERE `userid` = ".$_SESSION['user_id']."";
+          $result = mysqli_query($mysqli, $query);
+          $row = mysqli_fetch_assoc($result);
+          echo $row['uname'];
+        ?>
+      </h1>
     </header>
     <div class="menu">
       <div class="item"><a href="dashboard.php"><i class="fas fa-desktop"></i>Dashboard</a></div>
-      <div class="item"><a href="recenthistory.php"><i class="fas fa-history"></i>Recent History</a></div>
+      <div class="item"><a href="recenthistory.php"><i class="fas fa-clipboard-list"></i>Recent History</a></div>
       <div class="item"><a href="friends.php"><i class="fas fa-user"></i>Friends</a></div>
       <div class="item"><a href="groups.php"><i class="fas fa-users"></i>Groups</a></div>
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>

@@ -23,4 +23,8 @@ h6 {
     text-align: center;
     color: red;
 }
-  
+
+.index {
+    position: absolute;
+    z-index: 1;
+}
