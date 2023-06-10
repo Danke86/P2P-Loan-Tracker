@@ -92,6 +92,12 @@
       echo "<h6>".$_GET['friend_message']."</h6>";
     }
   ?>
+
+  <?php
+    if(isset($_GET['remove_friend'])) {
+      echo "<h6>".$_GET['remove_friend']."</h6>";
+    }
+  ?>
 </section>
 
 <?php include('footer.php'); ?>
