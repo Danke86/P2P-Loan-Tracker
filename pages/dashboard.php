@@ -273,7 +273,7 @@
     <tbody>
       <tr>
         <?php 
-          $curbalQuery1 = "SELECT sum(amount)-(SELECT sum(amount) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
+          $curbalQuery1 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
           $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
         ?>
         <td>
@@ -283,7 +283,7 @@
           ?>
         </td>
         <?php 
-          $curbalQuery2 = "SELECT sum(amount)-(SELECT sum(amount) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
+          $curbalQuery2 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
           $curbalResult2 = mysqli_query($mysqli, $curbalQuery2);
         ?>
         <td>
