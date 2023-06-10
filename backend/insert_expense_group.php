@@ -46,9 +46,12 @@
             }
 
             //insert into user_incurs_expenses this expense for every user in the group
-            while($usersInGroup = mysqli_fetch_assoc($result1)){
-                $user = mysqli_fetch_assoc($result1);
-                $query2 = "INSERT INTO user_incurs_expense(userid,expenseid) VALUES(".$user['userid'].", ".$current_auto['AUTO_INCREMENT']."";
+            while($user = mysqli_fetch_assoc($result1)){
+                $query2 = "INSERT INTO user_incurs_expense(userid,expenseid) VALUES(".$user['userid'].", ".$current_auto['AUTO_INCREMENT'].")";
+                $result2 = mysqli_query($mysqli, $query2);
+                if(!$result2){
+                    die("Query Failed".mysqli_error($mysqli));
+                }
             }
             
 

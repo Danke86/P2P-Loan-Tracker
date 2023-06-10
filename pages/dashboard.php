@@ -6,7 +6,6 @@
 
       <div class="box1">
         <h2>All Expenses Made With A Friend</h2>
-        <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal">PAY FRIEND</button> -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friendModal">ADD EXPENSE</button>
       </div>
     
@@ -35,7 +34,7 @@
                       FROM user_incurs_expense u
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
-                      WHERE u.userid=".$_SESSION['user_id']."";
+                      WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend'";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
@@ -66,7 +65,7 @@
                                       FROM expenses AS e
                                       LEFT JOIN payments p 
                                       ON e.expenseid = p.expenseid 
-                                      WHERE e.expenseid = ".$row['expenseid']."
+                                      WHERE e.expenseid = ".$row['expenseid']." 
                                       GROUP BY e.expenseid
                                     ";
                   $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
@@ -161,7 +160,10 @@
       <tbody>
         <?php
 
-          $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id']."";
+          $query = "SELECT * 
+                    FROM `expenses` e
+                    JOIN `user_incurs_expense` u ON e.expenseid = u.expenseid
+                    WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'";
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {
@@ -197,19 +199,6 @@
                                   ";
                 $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
                 $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
-
-                //get group id
-                // $querygroupid = "SELECT groupid FROM expenses WHERE expenseid = ".$row['expenseid']."";
-                // $resultgroupid = mysqli_query($mysqli, $querygroupid);
-                // $groupidrows = mysqli_fetch_assoc($resultgroupid);
-                // $groupid = $groupidrows['groupid'];
-                
-                //get member_count
-                // $querymemcount = "SELECT member_count FROM groups WHERE groupid = $groupid";
-                // $resultmemcount = mysqli_query($mysqli, $querymemcount);
-                // $memcountrows = mysqli_fetch_assoc($resultmemcount);
-                // $memcount = $memcountrows['member_count'];
-
 
                 $curBal = ($row['amount']) - $totalPaid['totalpaid'];
                 echo $curBal;
@@ -371,7 +360,6 @@
 
             <!-- PAYER DROPDOWN -->
             <?php
-                // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
                 $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
                 $resultNames = mysqli_query($mysqli, $queryNames);
                 //change from friends to group memebrs instead
@@ -379,15 +367,10 @@
 
             <label for="g_payer_names">Select payer</label>
             <select class="form-select" name="g_payer_names">
-              <?php
-                  // $queryUsername = "SELECT * FROM `users` NATURAL JOIN `is_member_of` WHERE userid=".$_SESSION['user_id']." AND  ";
-                  // $resultName = mysqli_query($mysqli, $queryUsername);
-                  
+              <?php                 
                   //get username of current userid
-                  // $username = mysqli_fetch_assoc($resultName);
                   if ($resultNames->num_rows > 0) {
-                    // echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
-                    while ($row = $resultNames->fetch_assoc()) {
+                        while ($row = $resultNames->fetch_assoc()) {
                         echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
                     }
                 }
