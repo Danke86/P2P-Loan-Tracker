@@ -42,7 +42,7 @@
             // $result3 = mysqli_query($mysqli, $query3);
 
             if(!$result && !$result1 && !$result2 && !$result3) {
-                die("Query Failed".mysqli_error());
+                die("Query Failed".mysqli_error($mysqli));
             }
             else {
                 header('location:../pages/dashboard.php?insert_msg=Amount deducted!');

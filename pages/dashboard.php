@@ -400,10 +400,10 @@
               <input type="number" step=".01" name="g_orig_amount" class="form-control">
             </div>
 
-            <!-- PAYER DROPDOWN -->
+            <!-- PAYER DROPDOWN
             <?php
-                $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
-                $resultNames = mysqli_query($mysqli, $queryNames);
+                // $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
+                // $resultNames = mysqli_query($mysqli, $queryNames);
                 //change from friends to group memebrs instead
               ?>
 
@@ -411,13 +411,13 @@
             <select class="form-select" name="g_payer_names">
               <?php                 
                   //get username of current userid
-                  if ($resultNames->num_rows > 0) {
-                        while ($row = $resultNames->fetch_assoc()) {
-                        echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
-                    }
-                }
+                //   if ($resultNames->num_rows > 0) {
+                //         while ($row = $resultNames->fetch_assoc()) {
+                //         echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
+                //     }
+                // }
                 ?>
-            </select>
+            </select> -->
 
             <!-- GROUP DROPDOWN -->
             <?php
