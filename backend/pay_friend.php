@@ -1,17 +1,14 @@
 <?php include('../config.php'); ?>
 <?php include('../backend/login_checker.php'); ?>
 <?php 
-    if(isset($_POST['expense_id'])&&isset($_POST['amount_paid_friend'])){
-        $expenseid = $_POST['expense_id'];
+    if(isset($_POST['expense_id_friend'])&&isset($_POST['amount_paid_friend'])){
+        $expenseid = $_POST['expense_id_friend'];
         $amountpaid = $_POST['amount_paid_friend'];
 
         if($expenseid == "" || empty($expenseid) || 
         $amountpaid == "" || empty($amountpaid) ) {
-        header('location:dashboard.php?friend_message=Please fill in all fields!');
+        header('location:../pages/dashboard.php?friend_message=Please fill in all fields!');
         } else{
-            // $query = "UPDATE `expenses` SET `amount` = `amount` - $amountpaid WHERE expenseid = $expenseid ";
-            // $result = mysqli_query($mysqli, $query);
-
             //check if you are the payer
             $query = "SELECT payerid FROM expenses WHERE expenseid = $expenseid";
             $result = mysqli_query($mysqli, $query);
@@ -41,8 +38,8 @@
             $query2 = "INSERT INTO `payments`(`amount`, `date_incurred`, `userid`, `expenseid`) VALUES ($amountpaid, NOW(), ".$_SESSION["user_id"].", $expenseid)";
             $result2 = mysqli_query($mysqli, $query2);
 
-            $query3 = "UPDATE expenses SET amount = amount - $amountpaid WHERE expenseid = $expenseid";
-            $result3 = mysqli_query($mysqli, $query3);
+            // $query3 = "UPDATE expenses SET amount = amount - $amountpaid WHERE expenseid = $expenseid";
+            // $result3 = mysqli_query($mysqli, $query3);
 
             if(!$result && !$result1 && !$result2 && !$result3) {
                 die("Query Failed".mysqli_error());
@@ -54,7 +51,7 @@
         }
 
     }else{
-        header('location:dashboard.php?friend_message=Please fill in all fields!');
+        header('location:../pages/dashboard.php?friend_message=Fields not set!');
         exit;
     }
 ?>

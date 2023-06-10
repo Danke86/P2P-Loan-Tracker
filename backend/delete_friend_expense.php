@@ -21,7 +21,7 @@
             $result2 = mysqli_query($mysqli, $query2);
 
             if (!$result && !$result1 && !$result) {
-                die("Query Failed".mysqli_error());
+                die("Query Failed".mysqli_error($mysqli));
             } else {
                 header('location:../pages/dashboard.php?delete_f_message=Deleted successfully!');
             }
