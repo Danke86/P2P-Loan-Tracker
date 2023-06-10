@@ -2,8 +2,10 @@
 include('../config.php');
 session_start(); // Add this line to start the session
 
-$origamountQ = "SELECT DISTINCT expenseid, sum(original_amount) 'amount' from user_incurs_expense NATURAL JOIN expenses WHERE userid IN (001, 002)";
-$paymentsQ = "SELECT sum(amount) 'amount' from payments WHERE expenseid IN (SELECT expenseid from user_incurs_expense NATURAL JOIN expenses WHERE userid IN (001, 002) group by expenseid)";
+$friendid = $_POST['friendid'];
+
+$origamountQ = "SELECT sum(original_amount) 'amount' from (SELECT distinct expenseid, original_amount from user_incurs_expense NATURAL JOIN expenses WHERE userid IN (".$_SESSION['user_id'].", '$friendid')) amt";
+$paymentsQ = "SELECT sum(amount) 'amount' from payments WHERE expenseid IN (SELECT expenseid from user_incurs_expense NATURAL JOIN expenses WHERE userid IN (".$_SESSION['user_id'].", '$friendid') group by expenseid)";
 $origamountR = mysqli_query($mysqli, $origamountQ);
 $paymentsR = mysqli_query($mysqli, $paymentsQ);
 
