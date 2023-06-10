@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('login_checker.php');
 include('../config.php');
 
 // Check if the form is submitted

@@ -1,6 +1,6 @@
 <?php
-session_start();
 include("../config.php");
+include('login_checker.php');
 
 // Retrieve group ID from form submission
 $groupId = $_POST['groupid'];

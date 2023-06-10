@@ -1,4 +1,5 @@
 <?php include('../config.php'); ?>
+<?php include('login_checker.php'); ?>
 
 <?php
     if(isset($_GET['id'])) {

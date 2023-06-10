@@ -1,5 +1,4 @@
 <?php include('header.php'); ?>
-
 <section class="main">
   <h1 id="main_title">GROUPS</h1>
   <div class="container">

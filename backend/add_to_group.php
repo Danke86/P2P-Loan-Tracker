@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('login_checker.php');
 include('../config.php');
 // Retrieve the selected group ID and friend ID from the form submission
 $groupId = $_POST['groupid'];

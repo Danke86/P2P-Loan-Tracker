@@ -3,7 +3,7 @@
 <section class = "main">
     <h1 id="main_title">RECENT HISTORY</h1>
     <div class="container">
-      <h2>Recent Expenses Made With A Friend (Within this month)</h2>
+      <h2>Recent Expenses Made With A Friend (Within this Month)</h2>
 
       <div>
         <input id="friendSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a friend" aria-label="Search" aria-describedby="search-addon" />
@@ -17,9 +17,6 @@
             <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Friend</th>
-            <th>Update</th>
-            <th>Delete</th>
-            <th>Pay</th>
           </tr>
         </thead>
         <tbody>
@@ -30,7 +27,9 @@
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
                       WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend'
-                      AND p.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()";
+                      AND p.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()
+                      ORDER BY p.date_incurred DESC
+                      ";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
@@ -87,16 +86,6 @@
                       echo $name['uname'];
                     ?>
           </td>
-          <td>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
-              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button>
-          </td>
-          <!-- <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td> -->
-          <td><a href="../backend/delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
-          <td>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal"
-              data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
-          </td>
         </tr>
         <?php
               }
@@ -106,7 +95,7 @@
     </table>
   </div>
   <div class="container">
-      <h2>Recent Expenses Made With A Group</h2>
+      <h2>Recent Expenses Made With A Group (Within this Month)</h2>
 
       <div>
         <input id="groupSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a group" aria-label="Search" aria-describedby="search-addon" />
@@ -120,9 +109,6 @@
           <th>Original amount</th>
           <th>Amount to be paid</th>
           <th>Group</th>
-          <th>Update</th>
-          <th>Delete</th>
-          <th>Pay</th>
         </tr>
       </thead>
       <tbody>
@@ -132,7 +118,9 @@
                     FROM `expenses` e
                     JOIN `user_incurs_expense` u ON e.expenseid = u.expenseid
                     WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'
-                    AND e.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()";
+                    AND e.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()
+                    ORDER BY e.date_incurred DESC
+                    ";
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {
@@ -190,11 +178,6 @@
                     echo $name['groupname'];
                   ?>
           </td>
-          <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
-              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button></td>
-          <td><a href="../backend/delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
-          <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paygroupModal"
-              data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button></td>
 
         </tr>
         <?php
