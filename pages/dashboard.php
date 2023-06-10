@@ -369,38 +369,14 @@
               <input type="number" step=".01" name="g_orig_amount" class="form-control">
             </div>
 
-            <!-- PAYER DROPDOWN -->
-            <?php
-                // $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
-                $queryNames = "SELECT u.userid, u.uname FROM users u NATURAL JOIN is_member_of i NATURAL JOIN groups g WHERE u.userid = ".$_SESSION['user_id']."";
-                $resultNames = mysqli_query($mysqli, $queryNames);
-                //change from friends to group memebrs instead
-              ?>
-
-            <label for="g_payer_names">Select payer</label>
-            <select class="form-select" name="g_payer_names">
-              <?php
-                  // $queryUsername = "SELECT * FROM `users` NATURAL JOIN `is_member_of` WHERE userid=".$_SESSION['user_id']." AND  ";
-                  // $resultName = mysqli_query($mysqli, $queryUsername);
-                  
-                  //get username of current userid
-                  // $username = mysqli_fetch_assoc($resultName);
-                  if ($resultNames->num_rows > 0) {
-                    // echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
-                    while ($row = $resultNames->fetch_assoc()) {
-                        echo '<option value='.$row['userid'].'>' .$row['uname']. '</option>';
-                    }
-                }
-                ?>
-            </select>
-
             <!-- GROUP DROPDOWN -->
             <?php
                 $queryGroup = "SELECT * FROM is_member_of NATURAL JOIN groups WHERE userid = ".$_SESSION['user_id']."";
                 $resultGroup = mysqli_query($mysqli, $queryGroup);
               ?>
             <label for="group_names">Select group</label>
-            <select class="form-select" aria-label="Default select example" name="group_names">
+            <select class="group form-select" name="group_names">
+              <option value="" selected="selected">Select group</option>
               <?php
                   if ($resultGroup->num_rows > 0) {
                     while ($row = $resultGroup->fetch_assoc()) {
@@ -410,6 +386,13 @@
                   
                 ?>
             </select>
+
+            <!-- PAYER DROPDOWN -->
+            <label for="g_payer_names">Select payer</label>
+            <select class="payer form-select" name="g_payer_names">
+              <option value="" selected="selected">Select payer</option>
+            </select>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
