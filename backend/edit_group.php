@@ -1,7 +1,6 @@
 <?php
-session_start(); 
-
 include('../config.php');
+include('login_checker.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Get the group ID and new group name from the form

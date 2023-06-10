@@ -1,4 +1,5 @@
 <?php include('../config.php'); ?>
+<?php include('login_checker.php'); ?>
 
 <?php 
     if(isset($_POST['update_expense_friend'])) {
@@ -13,7 +14,7 @@
         $result = mysqli_query($mysqli, $query);
 
         if (!$result) {
-            die("query Failed".mysqli_error());
+            die("query Failed".mysqli_error($mysqli));
         } else {
             if ($getgroup['groupid'] != null) {
                 header('location:../pages/dashboard.php?update_g_message=Updated successfully!');

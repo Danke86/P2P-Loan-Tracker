@@ -1,6 +1,7 @@
 <?php include('../config.php'); ?>
+<?php include('login_checker.php'); ?>
 <?php
-    session_start();
+    
     if(isset($_POST['add_friend'])) {
         $userid = $_POST['notfriend_names'];
         

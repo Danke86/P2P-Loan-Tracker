@@ -1,6 +1,6 @@
 <?php
 include('../config.php');
-session_start(); // Add this line to start the session
+include('login_checker.php'); // Add this line to start the session
 
 $friendid = $_POST['friendid'];
 
