@@ -3,7 +3,7 @@
 <section class = "main">
     <h1 id="main_title">RECENT HISTORY</h1>
     <div class="container">
-      <h2>Recent Expenses Made With A Friend (Within this month)</h2>
+      <h2>Recent Expenses Made With A Friend (Within this Month)</h2>
 
       <div>
         <input id="friendSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a friend" aria-label="Search" aria-describedby="search-addon" />
@@ -106,7 +106,7 @@
     </table>
   </div>
   <div class="container">
-      <h2>Recent Expenses Made With A Group</h2>
+      <h2>Recent Expenses Made With A Group (Within this Month)</h2>
 
       <div>
         <input id="groupSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a group" aria-label="Search" aria-describedby="search-addon" />
