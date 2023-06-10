@@ -49,7 +49,7 @@
   </div>
 
   <!-- Friend Modal -->
-  <form action="" method="post">
+  <form action="../backend/add_friend.php" method="post">
     <div class="modal fade" id="addfriendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -61,13 +61,13 @@
             </button>
           </div>
           <div class="modal-body">
-            <!-- FRIEND DROPDOWN -->
+            <!-- NOT FRIEND DROPDOWN -->
             <?php
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
+              $queryNames = "SELECT * from users where userid not in (SELECT u.userid FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id'].") and userid!=".$_SESSION['user_id']."";
               $resultNames = mysqli_query($mysqli, $queryNames);
             ?>
-            <label for="friend_names">Select friend</label>
-            <select class="form-select" aria-label="Default select example" name="friend_names">
+            <label for="notfriend_names">Select user</label>
+            <select class="form-select" aria-label="Default select example" name="notfriend_names">
               <?php
                 if ($resultNames->num_rows > 0) {
                   while ($row = $resultNames->fetch_assoc()) {
@@ -76,16 +76,22 @@
               }
               ?>
             </select>
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="submit" class="btn btn-success" name="add_expense_friend" value="Add expense">
+            <input type="submit" class="btn btn-success" name="add_friend" value="Add friend">
           </div>
         </div>
       </div>
     </div>
   </form>
+
+  <!-- get alert -->
+  <?php
+    if(isset($_GET['friend_message'])) {
+      echo "<h6>".$_GET['friend_message']."</h6>";
+    }
+  ?>
 </section>
 
 <?php include('footer.php'); ?>
