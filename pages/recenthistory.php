@@ -14,9 +14,12 @@
             <th>Expense ID</th>
             <th>Expense name</th>
             <th>Date incurred</th>
-            <th>Original Amount</th>
+            <th>Original amount</th>
             <th>Amount to be paid</th>
             <th>Friend</th>
+            <th>Update</th>
+            <th>Delete</th>
+            <th>Pay</th>
           </tr>
         </thead>
         <tbody>
@@ -26,35 +29,75 @@
                       FROM user_incurs_expense u
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
-                      WHERE u.userid=".$_SESSION['user_id']." AND MONTH(`date_incurred`) = MONTH(curdate()) AND expense_type = 'friend' "; //change 001 to $_SESSION[userid]
+                      WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend'
+                      AND p.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
-              die("query failed".mysqli_error());
+              die("query failed".mysqli_error($mysqli));
             } else {
               while($row = mysqli_fetch_assoc($result)){
                 ?>
-                  <tr>
-                    <td><?php echo $row['expenseid'] ?></td>
-                    <td><?php echo $row['expensename'] ?></td>
-                    <td><?php echo $row['date_incurred'] ?></td>
-                    <td><?php echo $row['original_amount'] ?></td>
-                    <td><?php echo $row['amount'] ?></td>
-                    <?php 
-                      $friendid = $row['friendid'];
-                      $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
-                      $friendResult = mysqli_query($mysqli, $friendName);
+        <tr data-expense-id="<?php echo $row['expenseid']; ?>">
+          <td>
+            <?php echo $row['expenseid'] ?>
+          </td>
+          <td>
+            <?php echo $row['expensename'] ?>
+          </td>
+          <td>
+            <?php echo $row['date_incurred'] ?>
+          </td>
+          <td>
+            <?php echo $row['original_amount'] ?>
+          </td>
+          <td>
+            <?php
+                $payer = $row['payerid'];
+                if($payer == $_SESSION['user_id']){
+                  echo 0.00;
+                }else{
+                  $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
+                                      FROM expenses AS e
+                                      LEFT JOIN payments p 
+                                      ON e.expenseid = p.expenseid 
+                                      WHERE e.expenseid = ".$row['expenseid']." 
+                                      GROUP BY e.expenseid
+                                    ";
+                  $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
+                  $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
+                  $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
+                  echo $curBal;
+                }
+              ?>
+          </td>
+          <?php //get friendname using friendid
+              $friendid = $row['friendid'];
+              $friendName = "SELECT * FROM `users` WHERE `userid` = $friendid";
+              $friendResult = mysqli_query($mysqli, $friendName);
+            ?>
+          <td>
+            <?php //name
+                      $name = mysqli_fetch_assoc($friendResult);
+                      echo $name['uname'];
                     ?>
-                    <td><?php 
-                    $name = mysqli_fetch_assoc($friendResult);
-                    echo $name['uname'];
-                    ?></td>
-                  </tr>
-                <?php
+          </td>
+          <td>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button>
+          </td>
+          <!-- <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td> -->
+          <td><a href="../backend/delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
+          <td>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
+          </td>
+        </tr>
+        <?php
               }
             }
           ?>
-        </tbody>
+      </tbody>
     </table>
   </div>
   <div class="container">
@@ -64,48 +107,91 @@
         <input id="groupSearchInput" type="search" class="form-control rounded" placeholder="Search an expense made with a group" aria-label="Search" aria-describedby="search-addon" />
       </div>
       <table id="groupTable" class="table table-hover table-bordered table-str">
-        <thead>
-          <tr>
-            <th>Expense ID</th>
-            <th>Expense name</th>
-            <th>Date incurred</th>
-            <th>Original Amount</th>
-            <th>Amount to be paid</th>
-            <th>Group</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
+      <thead>
+        <tr>
+          <th>Expense ID</th>
+          <th>Expense name</th>
+          <th>Date incurred</th>
+          <th>Original amount</th>
+          <th>Amount to be paid</th>
+          <th>Group</th>
+          <th>Update</th>
+          <th>Delete</th>
+          <th>Pay</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
 
-            $query = "SELECT * FROM `expenses` NATURAL JOIN `is_member_of` WHERE `userid` = ".$_SESSION['user_id']." AND `groupid` IS NOT NULL AND expense_type = 'group' "; //change 001 to $_SESSION[userid]
-            $result = mysqli_query($mysqli, $query);
+          $query = "SELECT * 
+                    FROM `expenses` e
+                    JOIN `user_incurs_expense` u ON e.expenseid = u.expenseid
+                    WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'
+                    AND e.date_incurred BETWEEN ADDDATE(NOW(), INTERVAL -30 DAY) AND NOW()";
+          $result = mysqli_query($mysqli, $query);
 
-            if (!$result) {
-              die("query failed".mysqli_error());
-            } else {
-              while($row = mysqli_fetch_assoc($result)){
-                ?>
-                  <tr>
-                    <td><?php echo $row['expenseid'] ?></td>
-                    <td><?php echo $row['expensename'] ?></td>
-                    <td><?php echo $row['date_incurred'] ?></td>
-                    <td><?php echo $row['original_amount'] ?></td>
-                    <td><?php echo $row['amount'] ?></td>
-                    <?php 
-                      $groupId = $row['groupid'];
-                      $groupTable = "SELECT * FROM `groups` WHERE `groupid` = $groupId";
-                      $groupResult = mysqli_query($mysqli, $groupTable);
-                    ?>
-                    <td><?php 
+          if (!$result) {
+            die("query failed".mysqli_error($mysqli));
+          } else {
+            while($row = mysqli_fetch_assoc($result)){
+              ?>
+        <tr data-expense-id="<?php echo $row['expenseid']; ?>">
+          <td>
+            <?php echo $row['expenseid'] ?>
+          </td>
+          <td>
+            <?php echo $row['expensename'] ?>
+          </td>
+          <td>
+            <?php echo $row['date_incurred'] ?>
+          </td>
+          <td>
+            <?php echo $row['original_amount'] ?>
+          </td>
+          <td>
+            <?php 
+              $payer = $row['payerid'];
+              if($payer == $_SESSION['user_id']){
+                echo 0.00;
+              }else{
+                $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
+                                    FROM expenses AS e
+                                    LEFT JOIN payments p 
+                                    ON e.expenseid = p.expenseid 
+                                    WHERE e.expenseid = ".$row['expenseid']."
+                                    GROUP BY e.expenseid
+                                  ";
+                $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
+                $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
+
+                $curBal = ($row['amount']) - $totalPaid['totalpaid'];
+                echo $curBal;
+              }
+             ?>
+          </td>
+          <?php 
+                    $groupid = $row['groupid'];
+                    $groupName = "SELECT * FROM `groups` WHERE `groupid` = $groupid";
+                    $groupResult = mysqli_query($mysqli, $groupName);
+                  ?>
+          <td>
+            <?php //get groupname using groupid
                     $name = mysqli_fetch_assoc($groupResult);
                     echo $name['groupname'];
-                    ?></td>
-                  </tr>
-                <?php
-              }
+                  ?>
+          </td>
+          <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">Update</button></td>
+          <td><a href="../backend/delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
+          <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paygroupModal"
+              data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button></td>
+
+        </tr>
+        <?php
             }
+          }
           ?>
-        </tbody>
+      </tbody>
     </table>
   </div>
 </section>
