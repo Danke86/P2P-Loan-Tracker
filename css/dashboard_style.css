@@ -28,3 +28,15 @@ h6 {
     position: absolute;
     z-index: 1;
 }
+
+.positive-bal-text{
+    color: green;
+}
+  
+.negative-bal-text{
+    color:red;
+}
+
+.bold-bal-text{
+    font-weight: bold;
+}

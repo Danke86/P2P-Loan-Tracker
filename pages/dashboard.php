@@ -3,6 +3,68 @@
 <section class="main">
   <h1 id="main_title">VIEW EXPENSES</h1>
   <div class="container">
+    <div class="box1">
+    <h2>Current Balance from all Expenses</h2>
+    </div>
+    <table class="table table-hover table-bordered table-str">
+      <thead>
+        <tr>
+          <th>Amount you owe</th>
+          <th>Amount owed to you</th>    
+          <th>Current Balance</th>          
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <?php 
+            $curbalQuery1 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
+            $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
+          ?>
+          <td>
+            <?php //utang mo
+              $curbal1 = mysqli_fetch_assoc($curbalResult1);
+              //echo $curbal1['curbal'];
+              $curbalnegative = $curbal1['curbal'];
+              if($curbalnegative > 0){
+                echo "<span class='negative-bal-text'> $curbalnegative </span>";
+              }else{
+                echo "<span> $curbalnegative </span>";
+              }
+            ?>
+          </td>
+          <?php 
+            $curbalQuery2 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
+            $curbalResult2 = mysqli_query($mysqli, $curbalQuery2);
+          ?>
+          <td>
+            <?php //get groupname using groupid
+              $curbal2 = mysqli_fetch_assoc($curbalResult2);
+              // echo $curbal2['curbal'];
+              $curbalpositive = $curbal2['curbal'];
+              if($curbalpositive > 0){
+                echo "<span class='positive-bal-text'> $curbalpositive </span>";
+              }else{
+                echo "<span> $curbalpositive </span>";
+              }
+              
+            ?>
+          </td> 
+          <td>
+            <?php //get groupname using groupid
+              $curbal = (-$curbal1['curbal'])+$curbal2['curbal'];
+              if($curbal >= 0){
+                echo "<span class='positive-bal-text bold-bal-text'> $curbal </span>";
+              }else{
+                echo "<span class='negative-bal-text bold-bal-text'> $curbal </span>";
+              }
+              
+            ?>
+          </td>  
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="container">
 
       <div class="box1">
         <h2>All Expenses Made With A Friend</h2>
@@ -71,7 +133,12 @@
                   $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
                   $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
                   $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
-                  echo $curBal;
+                  if($curBal > 0){
+                    echo "<span class='negative-bal-text'> $curBal </span>";
+                  }else{
+                    echo "<span> $curBal </span>";
+                  }
+                  // echo $curBal;
                 }
               ?>
           </td>
@@ -201,7 +268,12 @@
                 $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
 
                 $curBal = ($row['amount']) - $totalPaid['totalpaid'];
-                echo $curBal;
+                // echo $curBal;
+                if($curBal > 0){
+                  echo "<span class='negative-bal-text'> $curBal </span>";
+                }else{
+                  echo "<span> $curBal </span>";
+                }
               }
              ?>
           </td>
@@ -258,49 +330,6 @@
       }
     ?>
   </div>
-
-  <div class="box1">
-  <h2>View Current Balance from all Expenses</h2>
-  </div>
-  <table class="table table-hover table-bordered table-str">
-    <thead>
-      <tr>
-        <th>Amount you owe</th>
-        <th>Amount owed to you</th>    
-        <th>Current Balance</th>          
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <?php 
-          $curbalQuery1 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
-          $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
-        ?>
-        <td>
-          <?php //utang mo
-            $curbal1 = mysqli_fetch_assoc($curbalResult1);
-            echo $curbal1['curbal'];
-          ?>
-        </td>
-        <?php 
-          $curbalQuery2 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
-          $curbalResult2 = mysqli_query($mysqli, $curbalQuery2);
-        ?>
-        <td>
-          <?php //get groupname using groupid
-            $curbal2 = mysqli_fetch_assoc($curbalResult2);
-            echo $curbal2['curbal'];
-          ?>
-        </td> 
-        <td>
-          <?php //get groupname using groupid
-            $curbal = (-$curbal1['curbal'])+$curbal2['curbal'];
-            echo $curbal;
-          ?>
-        </td>  
-      </tr>
-    </tbody>
-  </table>
 
 
   <!-- MODALS -->
