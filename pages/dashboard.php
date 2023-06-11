@@ -17,13 +17,14 @@
       <tbody>
         <tr>
           <?php 
+            // the amount the current user owe
+            // the expenses of current user in which they were not the payerid (they did not pay the initial amount) - the amount of payments the current user paid
             $curbalQuery1 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
             $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
           ?>
           <td>
-            <?php //utang mo
+            <?php
               $curbal1 = mysqli_fetch_assoc($curbalResult1);
-              //echo $curbal1['curbal'];
               $curbalnegative = $curbal1['curbal'];
               if($curbalnegative > 0){
                 echo "<span class='negative-bal-text'> $curbalnegative </span>";
@@ -33,13 +34,14 @@
             ?>
           </td>
           <?php 
+            // the amount owed to current user
+            // the expenses of current user in which they were the payerid (they paid the initial amount) - the payments of other user (not the current user) where the expenseid are the ones the current user paid
             $curbalQuery2 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid!=".$_SESSION['user_id']." and expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."))  'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']."";
             $curbalResult2 = mysqli_query($mysqli, $curbalQuery2);
           ?>
           <td>
-            <?php //get groupname using groupid
+            <?php
               $curbal2 = mysqli_fetch_assoc($curbalResult2);
-              // echo $curbal2['curbal'];
               $curbalpositive = $curbal2['curbal'];
               if($curbalpositive > 0){
                 echo "<span class='positive-bal-text'> $curbalpositive </span>";
