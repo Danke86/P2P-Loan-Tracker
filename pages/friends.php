@@ -4,7 +4,7 @@
   <h1 id="main_title">FRIENDS</h1>
   <div class="container">
     <div class="box1">
-    <h2>Current Balance from all Expenses</h2>
+    <h2>Current Balance from all Friend Expenses</h2>
     </div>
     <table class="table table-hover table-bordered table-str">
       <thead>
@@ -45,7 +45,15 @@
               $friend = $friend_expense['amount'] - $friend_payment['amount'];
             ?>
             <td>
-              <?php echo $friend ?>
+              <?php 
+                if($friend > 0){
+                  echo "<span class='positive-bal-text'> $friend </span>";
+                }else{
+                  echo "<span> $friend </span>";
+                }
+              
+              ?>
+              
             </td>
             <?php 
               // first select the expenses of current user
@@ -58,17 +66,36 @@
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where friend is the payerid, current user is the one who needed to pay) 
               // get the sum amount of payments by current user in those expenses they made tgt
-              $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";              ;
+              $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in 
+              (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in 
+              (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." 
+              and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";
               $user_paymentR = mysqli_query($mysqli, $user_paymentQ);
               $user_payment = mysqli_fetch_assoc($user_paymentR);
 
               $user = $user_expense['amount'] - $user_payment['amount'];
             ?>
             <td>
-              <?php echo $user ?>
+              <?php 
+              if($user> 0){
+                echo "<span class='negative-bal-text'> $user </span>";
+              }else{
+                echo "<span> $user </span>";
+              }
+              
+              ?>
             </td>
             <td>
-              <?php echo ($friend - $user) ?>
+              <?php
+                $outbalance = $friend - $user;
+                if($outbalance > 0){
+                  echo "<span class='positive-bal-text'> $outbalance </span>";
+                }else if($outbalance < 0){
+                  echo "<span class='negative-bal-text'> $outbalance </span>";
+                }else{
+                  echo "<span> $friend </span>";
+                }
+              ?>
             </td>
         </tr>
         <?php } ?>
@@ -88,7 +115,6 @@
       <thead>
         <tr>
           <th>Friend Name</th>
-          <th>Outstanding Balance</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -108,16 +134,9 @@
             echo "<tr>";
             echo "<td>" . $row['uname'] . "</td>";
 
-            $userID= $_SESSION['user_id'];
-            $friendID = $row['userid'];
+            // $userID= $_SESSION['user_id'];
+            // $friendID = $row['userid'];
             
-            $outstandBalQuery = "SELECT COALESCE(,0)FROM ";
-            ?>
-            <td>
-
-            </td>
-
-            <?php
             echo "<td>";
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
