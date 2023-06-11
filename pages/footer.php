@@ -50,6 +50,17 @@ TO USE: include footer.php at the bottom of your file-->
       });
     });
 
+    // change value of notfriend_names every input to the friendid as the value in options is the uname
+    $('input[name=notfriend_names]').on('input',function() {
+      var selectedOption = $('option[value="'+$(this).val()+'"]');
+
+      $("#id_form").on("submit", function(){
+        //select the id (the value we will pass, userid) from the value (the uname)
+        //change the value of datalist/select to the userid when submitting
+        $('input[name=notfriend_names]').val(selectedOption.attr('id')); 
+      });
+    });
+
     $(document).ready(function() {
       // Attach event listener to search input field
       $('#groupSearchInput').on('keyup', function() {

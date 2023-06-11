@@ -5,7 +5,7 @@
   <div class="container">
     <div class="box1">
       <h2>List of Friends</h2>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addfriendModal">ADD FRIEND</button>
+      <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addfriendModal">ADD A FRIEND</button>
     </div>
 
     <div>
@@ -49,7 +49,7 @@
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
             echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
-            echo "<button type='button' class='btn btn-primary add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal-" . $row['userid'] . "'>Add to Group</button>";
+            echo "<button type='button' class='btn btn-success add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal-" . $row['userid'] . "'>Add to Group</button>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
@@ -102,8 +102,8 @@
   </div>
 </section>
 
-<!-- Friend Modal -->
-<form action="../backend/add_friend.php" method="post">
+<!-- Add a Friend Modal -->
+<form action="../backend/add_friend.php" method="post" id="id_form">
   <div class="modal fade" id="addfriendModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -114,19 +114,20 @@
           </button>
         </div>
         <div class="modal-body">
-          <label for="notfriend_names">Select User</label>
-          <select class="form-select" aria-label="Default select example" name="notfriend_names">
+          <label for="notfriend_names" class="form-label">Select User</label>
+          <input class="form-control" name="notfriend_names" list="datalistOptions" id="exampleDataList" placeholder="Type to search...">
+          <datalist id="datalistOptions">
             <?php
             $queryNames = "SELECT * FROM users WHERE userid NOT IN (SELECT u.userid FROM users u JOIN befriends b ON u.userid = b.friendid WHERE b.userid = " . $_SESSION['user_id'] . ") AND userid != " . $_SESSION['user_id'];
             $resultNames = mysqli_query($mysqli, $queryNames);
 
             if ($resultNames->num_rows > 0) {
-              while ($row = $resultNames->fetch_assoc()) {
-                echo '<option value="' . $row['userid'] . '">' . $row['uname'] . '</option>';
-              }
+              while ($row = $resultNames->fetch_assoc()) { ?>
+            <option id="<?php echo $row['userid'] ?>" value="<?php echo $row['uname'] ?>">
+            <?php  }
             }
             ?>
-          </select>
+          </datalist>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
