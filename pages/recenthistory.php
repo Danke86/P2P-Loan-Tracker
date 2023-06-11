@@ -55,7 +55,21 @@
             <?php
                 $payer = $row['payerid'];
                 if($payer == $_SESSION['user_id']){
-                  echo 0.00;
+                  $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
+                                      FROM expenses AS e
+                                      LEFT JOIN payments p 
+                                      ON e.expenseid = p.expenseid 
+                                      WHERE e.expenseid = ".$row['expenseid']." 
+                                      GROUP BY e.expenseid
+                                    ";
+                  $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
+                  $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
+                  $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
+                  if($curBal > 0){
+                    echo "<span class='positive-bal-text'> $curBal (remaining) </span>";
+                  }else{
+                    echo "<span> $curBal </span>";
+                  }
                 }else{
                   $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
                                       FROM expenses AS e
@@ -147,7 +161,22 @@
             <?php 
               $payer = $row['payerid'];
               if($payer == $_SESSION['user_id']){
-                echo 0.00;
+                $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
+                                    FROM expenses AS e
+                                    LEFT JOIN payments p 
+                                    ON e.expenseid = p.expenseid 
+                                    WHERE e.expenseid = ".$row['expenseid']."
+                                    AND p.userid != ".$_SESSION['user_id']."
+                                    GROUP BY e.expenseid
+                                    ";
+                  $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
+                  $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
+                  $curBal = $row['original_amount'] - ($totalPaid['totalpaid'] ?? 0);
+                  if($curBal > 0){
+                    echo "<span class='positive-bal-text'> $curBal (remaining) </span>";
+                  }else{
+                    echo "<span> $curBal </span>";
+                  }
               }else{
                 $totalPaidQuery = "SELECT COALESCE(SUM(p.amount),0) AS totalpaid
                                     FROM expenses AS e
