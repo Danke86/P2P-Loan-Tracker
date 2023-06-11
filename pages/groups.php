@@ -2,8 +2,10 @@
 <section class="main">
   <h1 id="main_title">GROUPS</h1>
   <div class="container">
-    <h2>List of Groups</h2>
-
+    <div class="box1">
+      <h2>List of Groups</h2>
+      <!-- Create Group Button -->
+      <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#groupModal">CREATE GROUP</button>    </div>
     <div>
       <input id="grouplistSearchInput" type="search" class="form-control rounded" placeholder="Search a group" aria-label="Search" aria-describedby="search-addon" />
     </div>
@@ -62,7 +64,7 @@
                   ?>
                 </td>
                 <td>
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $groupId; ?>">Edit</button>
+                  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $groupId; ?>">Edit</button>
 
                   <?php if ($memberCount == 1): ?>
                     <form method="post" action="../backend/delete_group.php">
@@ -84,9 +86,6 @@
         ?>
       </tbody>
     </table>
-
-    <!-- Create Group Button -->
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#groupModal">Create Group</button>
   </div>
 </section>
 

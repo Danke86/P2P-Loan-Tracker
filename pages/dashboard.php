@@ -68,7 +68,7 @@
 
       <div class="box1">
         <h2>All Expenses Made With A Friend</h2>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#friendModal">ADD EXPENSE</button>
+        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#friendModal">ADD EXPENSE</button>
       </div>
     
       <div>
@@ -162,7 +162,7 @@
           <!-- <td><a href="update_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-success">Update</td> -->
           <td><a href="../backend/delete_friend_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
           <td>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#payfriendModal"
+            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#payfriendModal"
               data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button>
           </td>
         </tr>
@@ -205,7 +205,7 @@
   <div class="container">
     <div class="box1">
       <h2>All Expenses Made With A Group</h2>
-      <button class="btn btn-primary" id="2" data-bs-toggle="modal" data-bs-target="#groupModal">ADD EXPENSE</button>
+      <button class="btn btn-warning" id="2" data-bs-toggle="modal" data-bs-target="#groupModal">ADD EXPENSE</button>
     </div>
 
       <div>
@@ -295,7 +295,7 @@
           <td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal"
               data-expense-id="<?php echo $row['expenseid']; ?>">Update</button></td>
           <td><a href="../backend/delete_group_expense.php?id=<?php echo $row['expenseid'] ?>" class="btn btn-danger">Delete</td>
-          <td><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paygroupModal"
+          <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#paygroupModal"
               data-expense-id="<?php echo $row['expenseid']; ?>">PAY</button></td>
 
         </tr>
