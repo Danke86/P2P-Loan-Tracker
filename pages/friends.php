@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th>Friend Name</th>
+          <th>Outstanding Balance</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -33,6 +34,17 @@
           while ($row = mysqli_fetch_assoc($result)) {
             echo "<tr>";
             echo "<td>" . $row['uname'] . "</td>";
+
+            $userID= $_SESSION['user_id'];
+            $friendID = $row['userid'];
+            
+            $outstandBalQuery = "SELECT COALESCE(,0)FROM ";
+            ?>
+            <td>
+
+            </td>
+
+            <?php
             echo "<td>";
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";

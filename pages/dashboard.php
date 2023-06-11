@@ -134,7 +134,7 @@
                                     ";
                   $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
                   $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
-                  $curBal = $row['original_amount'] - $totalPaid['totalpaid'];
+                  $curBal = $row['amount'] - $totalPaid['totalpaid'];
                   if($curBal > 0){
                     echo "<span class='negative-bal-text'> $curBal </span>";
                   }else{
@@ -265,12 +265,13 @@
                                     LEFT JOIN payments p 
                                     ON e.expenseid = p.expenseid 
                                     WHERE e.expenseid = ".$row['expenseid']."
+                                    AND p.userid = ".$_SESSION['user_id']."
                                     GROUP BY e.expenseid
                                   ";
                 $resultTotalPaid = mysqli_query($mysqli, $totalPaidQuery);
                 $totalPaid = mysqli_fetch_assoc($resultTotalPaid);
 
-                $curBal = ($row['amount']) - $totalPaid['totalpaid'];
+                $curBal = ($row['amount']) - ($totalPaid['totalpaid'] ?? 0);
                 // echo $curBal;
                 if($curBal > 0){
                   echo "<span class='negative-bal-text'> $curBal </span>";
