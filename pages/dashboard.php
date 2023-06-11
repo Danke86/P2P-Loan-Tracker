@@ -96,7 +96,7 @@
                       FROM user_incurs_expense u
                       JOIN user_incurs_expense e on u.expenseid=e.expenseid and u.userid != e.userid
                       JOIN expenses p on u.expenseid=p.expenseid
-                      WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend'";
+                      WHERE u.userid=".$_SESSION['user_id']." AND p.expense_type = 'friend' order by date_incurred desc";
             $result = mysqli_query($mysqli, $query);
 
             if (!$result) {
@@ -232,7 +232,7 @@
           $query = "SELECT * 
                     FROM `expenses` e
                     JOIN `user_incurs_expense` u ON e.expenseid = u.expenseid
-                    WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'";
+                    WHERE u.userid = ".$_SESSION['user_id']." AND e.expense_type = 'group'  order by date_incurred desc";
           $result = mysqli_query($mysqli, $query);
 
           if (!$result) {
@@ -360,22 +360,16 @@
               <input type="number" step=".01" name="orig_amount" class="form-control">
             </div>
 
-            <!-- PAYER DROPDOWN -->
+            <!-- FRIEND DROPDOWN -->
             <?php
               $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
               $resultNames = mysqli_query($mysqli, $queryNames);
             ?>
-
-            <label for="f_payer_names">Select payer</label>
-            <select class="form-select" aria-label="Default select example" name="f_payer_names">
+            <label for="friend_names">Select friend</label>
+            <select class="friend form-select" aria-label="Default select example" name="friend_names">
+              <option value="" selected="selected">Select friend</option>
               <?php
-                $queryUsername = "SELECT * FROM `users` WHERE userid=".$_SESSION['user_id']."";
-                $resultName = mysqli_query($mysqli, $queryUsername);
-                
-                //get username of current userid
-                $username = mysqli_fetch_assoc($resultName);
                 if ($resultNames->num_rows > 0) {
-                  echo '<option value='.$username['userid'].'>' .$username['uname'] . '</option>';
                   while ($row = $resultNames->fetch_assoc()) {
                       echo '<option value='.$row['userid'].'>' . $row['uname'] . '</option>';
                   }
@@ -383,20 +377,10 @@
               ?>
             </select>
 
-            <!-- FRIEND DROPDOWN -->
-            <?php
-              $queryNames = "SELECT u.userid, u.uname FROM `users` u JOIN `befriends` b ON u.userid=b.friendid WHERE b.userid=".$_SESSION['user_id']."";
-              $resultNames = mysqli_query($mysqli, $queryNames);
-            ?>
-            <label for="friend_names">Select friend</label>
-            <select class="form-select" aria-label="Default select example" name="friend_names">
-              <?php
-                if ($resultNames->num_rows > 0) {
-                  while ($row = $resultNames->fetch_assoc()) {
-                      echo '<option value='.$row['userid'].'>' . $row['uname'] . '</option>';
-                  }
-              }
-              ?>
+            <!-- PAYER DROPDOWN -->
+            <label for="f_payer_names">Select payer</label>
+            <select class="fpayer form-select" name="f_payer_names">
+              <option value="" selected="selected">Select payer</option>
             </select>
 
           </div>

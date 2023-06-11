@@ -35,6 +35,21 @@ TO USE: include footer.php at the bottom of your file-->
       });
     });
 
+    // get payer names after selecting a friend
+    $(document).ready(function(){
+      $(".friend").change(function(){
+        var friendid = $(this).val();
+        $.ajax({
+          url: "get_payer_friend.php",
+          method: "POST",
+          data: {friendid: friendid},
+          success: function(data) {
+            $(".fpayer").html(data);
+          }
+        });
+      });
+    });
+
     $(document).ready(function() {
       // Attach event listener to search input field
       $('#groupSearchInput').on('keyup', function() {

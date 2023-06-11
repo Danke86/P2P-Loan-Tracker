@@ -1,13 +1,14 @@
 <?php include('../config.php'); ?>
 <?php include('login_checker.php'); ?>
 <?php 
+    session_start();
 
-  if(isset($_POST['groupid'])) {
-    $groupid = $_POST['groupid'];
+  if(isset($_POST['friendid'])) {
+    $friendid = $_POST['friendid'];
 
-    $sql = mysqli_query($mysqli, "SELECT * FROM is_member_of i NATURAL JOIN groups g NATURAL JOIN users WHERE groupid = $groupid;");
+    $sql = mysqli_query($mysqli, "SELECT * FROM users WHERE userid IN (".$_SESSION['user_id'].", $friendid)");
   }?>
-  <select class="form-select" name="g_payer_names">
+  <select class="form-select" name="f_payer_names">
     <option value="" >Select payer</option>
     <?php
     while ($row = mysqli_fetch_array($sql)) {
