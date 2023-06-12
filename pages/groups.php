@@ -5,7 +5,7 @@
     <div class="box1">
     <h2>Current Balance from all Group Expenses</h2>
     </div>
-    <table class="table table-hover table-bordered table-str">
+    <table id="obTableGroup" class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Group</th>

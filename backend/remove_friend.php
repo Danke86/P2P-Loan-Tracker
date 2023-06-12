@@ -40,15 +40,8 @@ $user_payment = mysqli_fetch_assoc($user_paymentR);
 
 $user = $user_expense['amount'] - $user_payment['amount'];
 
-// if part of group
-$ifgroupQ = "select count(groupid) 'count' from is_member_of natural join groups where groupid in (select groupid from is_member_of natural join groups where userid=".$_SESSION['user_id'].") AND userid=$friendid";
-$ifgroupR = mysqli_query($mysqli, $ifgroupQ);
-$ifgroup = mysqli_fetch_assoc($ifgroupR);
-
 if (($friend != 0) || ($user != 0)) { //cant delete friend if there is unpaid payment
   header('location:../pages/friends.php?remove_friend=Friend cannot be removed due to unresolved payment of both/either parties.');
-} else if ($ifgroup['count'] > 0) {
-  header('location:../pages/friends.php?remove_friend=Friend cannot be removed because they are part of your group.');
 } else {
   // Retrieve friend ID from form submission
   $friendId = $_POST['friendid'];

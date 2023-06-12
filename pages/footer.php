@@ -53,8 +53,19 @@ TO USE: include footer.php at the bottom of your file-->
     // filter out rows where oustanding balance == 0
     $(document).ready(function() {
       $("#obTable tbody tr").each(function() {
-        var value = parseInt($(this).find("td:eq(3)").text());
-        if (value === 0) {
+        var value = parseInt($(this).find("td:eq(1)").text());
+        var value2 = parseInt($(this).find("td:eq(2)").text());
+        if (value === 0 && value2 === 0) {
+          $(this).hide();
+        }
+      });
+    });
+
+    $(document).ready(function() {
+      $("#obTableGroup tbody tr").each(function() {
+        var value = parseInt($(this).find("td:eq(1)").text());
+        var value2 = parseInt($(this).find("td:eq(2)").text());
+        if (value === 0 && value2 === 0) {
           $(this).hide();
         }
       });
