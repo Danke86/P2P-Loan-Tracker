@@ -33,8 +33,8 @@
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where current user is the payerid) 
               // get the sum amount of expenses
-              $friend_expenseQ = "SELECT COALESCE(sum(amount),0) 'total' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid']."";
-              // $friend_expenseQ = "SELECT COALESCE(SUM(e.amount),0) 'total' FROM user_incurs_expense u JOIN expenses e ON u.expenseid = e.expenseid WHERE payerid = $userid AND u.userid = $friendid AND e.expense_type = 'friend'" ;
+              // $friend_expenseQ = "SELECT COALESCE(sum(amount),0) 'total' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid']."";
+              $friend_expenseQ = "SELECT COALESCE(SUM(e.amount),0) 'total' FROM user_incurs_expense u JOIN expenses e ON u.expenseid = e.expenseid WHERE payerid = $userid AND u.userid = $friendid AND e.expense_type = 'friend'" ;
               $friend_expenseR = mysqli_query($mysqli, $friend_expenseQ);
               $friend_expense = mysqli_fetch_assoc($friend_expenseR);
               
@@ -54,8 +54,8 @@
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where friend is the payerid) 
               // get the sum amount of expenses
-              $user_expenseQ = "SELECT COALESCE(sum(amount),0) 'total' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." and expense_type='friend') and userid=".$_SESSION['user_id']."";
-              // $user_expenseQ = "SELECT COALESCE(SUM(e.amount),0) 'total' FROM user_incurs_expense u JOIN expenses e ON u.expenseid = e.expenseid WHERE payerid = $friendid AND u.userid = $userid AND e.expense_type = 'friend'";
+              // $user_expenseQ = "SELECT COALESCE(sum(amount),0) 'total' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." and expense_type='friend') and userid=".$_SESSION['user_id']."";
+              $user_expenseQ = "SELECT COALESCE(SUM(e.amount),0) 'total' FROM user_incurs_expense u JOIN expenses e ON u.expenseid = e.expenseid WHERE payerid = $friendid AND u.userid = $userid AND e.expense_type = 'friend'";
               $user_expenseR = mysqli_query($mysqli, $user_expenseQ);
               $user_expense = mysqli_fetch_assoc($user_expenseR);
 
