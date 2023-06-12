@@ -55,6 +55,10 @@ P2P is a lending tracker app to track loans or expenses you do together with oth
   * Note: Please make sure that port `3306` is available or terminate `mysqld.exe` in task manager
 4. Open MySQL admin and import `p2pschema.sql`
   <img src="images/import-schema.png">
+5. Open up the browser and go to
+    ```sh
+    localhost/group6_project127/index.php
+    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
