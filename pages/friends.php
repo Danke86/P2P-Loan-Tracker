@@ -101,7 +101,7 @@
                 }else if($outbalance < 0){
                   echo "<span class='negative-bal-text'> $outbalance </span>";
                 }else{
-                  echo "<span> $friend </span>";
+                  echo "<span> $outbalance </span>";
                 }
               ?>
             </td>

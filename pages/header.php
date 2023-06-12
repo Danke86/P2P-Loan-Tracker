@@ -11,6 +11,7 @@ TO USE: include header.php ?> -->
   <style media="screen">
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
   </style>
+  <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/dashboard_style.css">
 
   <!-- allows modal to work -->
@@ -25,7 +26,6 @@ TO USE: include header.php ?> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="../css/styles.css">
   </head>
 <body>
   <div class="menu-btn">
@@ -74,7 +74,7 @@ TO USE: include header.php ?> -->
               <label for="update_username">New username:</label>
               <input type="text" name="update_username" class="form-control">
             </div>
-            
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

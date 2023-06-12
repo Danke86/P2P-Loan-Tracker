@@ -6,7 +6,7 @@
     <div class="box1">
     <?php
       if(isset($_GET['update_username'])) {
-        echo "<h6>".$_GET['update_username']."</h6>";
+        echo "<h6 style='color:green;'>".$_GET['update_username']."</h6>";
       }
     ?>
     <h2>Current Balance from all Expenses</h2>
@@ -201,24 +201,18 @@
       if(isset($_GET['friend_message'])) {
         echo "<h6>".$_GET['friend_message']."</h6>";
       }
-    ?>
-
-    <!-- get insert successful message -->
-    <?php
+    
+      // get insert successful message
       if(isset($_GET['insert_msg'])) {
         echo "<h6>".$_GET['insert_msg']."</h6>";
       }
-    ?>
-
-    <!-- get updat successful message -->
-    <?php
+    
+      // get update successful message
       if(isset($_GET['update_f_message'])) {
         echo "<h6>".$_GET['update_f_message']."</h6>";
       }
-    ?>
-
-    <!-- get delete successful message -->
-    <?php
+  
+      // get delete successful message
       if(isset($_GET['delete_f_message'])) {
         echo "<h6>".$_GET['delete_f_message']."</h6>";
       }
@@ -350,24 +344,18 @@
       if(isset($_GET['group_message'])) {
         echo "<h6>".$_GET['group_message']."</h6>";
       }
-    ?>
 
-    <!-- get insert successful message -->
-    <?php
+      // get insert successful message -->
       if(isset($_GET['group_insert_msg'])) {
         echo "<h6>".$_GET['group_insert_msg']."</h6>";
       }
-    ?>
 
-    <!-- get update successful message -->
-    <?php
+      // get update successful message -->
       if(isset($_GET['update_g_message'])) {
         echo "<h6>".$_GET['update_g_message']."</h6>";
       }
-    ?>
 
-    <!-- get delete successful message -->
-    <?php
+      // get delete successful message -->
       if(isset($_GET['delete_g_message'])) {
         echo "<h6>".$_GET['delete_g_message']."</h6>";
       }
