@@ -11,7 +11,7 @@
           <th>Group</th>
           <th>Amount you owe</th>
           <th>Amount owed by group</th>    
-          <th>Oustanding Balance</th>          
+          <th>Outstanding Balance</th>          
         </tr>
       </thead>
       <tbody>
