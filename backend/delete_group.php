@@ -3,7 +3,7 @@ include("../config.php");
 include('login_checker.php');
 
 // Retrieve group ID from form submission
-$groupId = $_POST['groupid'];
+$groupid = $_POST['groupid'];
 
 $userid = $_SESSION['user_id'];
 // first select the expenses of current user
