@@ -24,7 +24,7 @@
           <?php 
             // the amount the current user owe
             // the expenses of current user in which they were not the payerid (they did not pay the initial amount) - the amount of payments the current user paid
-            $curbalQuery1 = "SELECT COALESCE(sum(original_amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
+            $curbalQuery1 = "SELECT COALESCE(sum(amount),0)-(SELECT COALESCE(sum(amount),0) from payments WHERE userid=".$_SESSION['user_id'].") 'curbal' from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid!=".$_SESSION['user_id']."";
             $curbalResult1 = mysqli_query($mysqli, $curbalQuery1);
           ?>
           <td>
