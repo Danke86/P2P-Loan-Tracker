@@ -21,8 +21,6 @@ P2P is a lending tracker app to track loans or expenses you do together with oth
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ### Built With
 
 * ![HTML][html-badge]
