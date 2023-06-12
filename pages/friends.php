@@ -172,7 +172,7 @@
             $queryGroups = "SELECT g.groupid, g.groupname
                             FROM groups g
                             LEFT JOIN is_member_of m ON g.groupid = m.groupid AND m.userid = '$friendId'
-                            WHERE m.userid IS NULL";
+                            WHERE m.userid IS NULL OR m.userid != '$friendId'";
 
             $resultGroups = mysqli_query($mysqli, $queryGroups);
 
