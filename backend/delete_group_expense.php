@@ -13,10 +13,16 @@
         if (($remaining_amount['amount']) != 0) {
             header('location:../pages/dashboard.php?delete_g_message=Expense cannot be deleted due to unresolved payment.');
         } else {
-            $query = "DELETE FROM `expenses` where `expenseid`='$expense_id'";
+            $query = "DELETE FROM `user_incurs_expense` where `expenseid` = '$expense_id'";
             $result = mysqli_query($mysqli, $query);
 
-            if (!$result) {
+            $query2 = "DELETE FROM `payments` where `expenseid` = '$expense_id'";
+            $result2 = mysqli_query($mysqli, $query2);
+
+            $query1 = "DELETE FROM `expenses` where `expenseid` = '$expense_id'";
+            $result1 = mysqli_query($mysqli, $query1);
+
+            if (!$result && !$result1 && !$result) {
                 die("Query Failed".mysqli_error($mysqli));
             } else {
                 header('location:../pages/dashboard.php?delete_g_message=Deleted successfully!');
