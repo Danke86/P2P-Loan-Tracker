@@ -6,7 +6,7 @@
     <div class="box1">
     <?php
       if(isset($_GET['update_username'])) {
-        echo "<h6 style='color:green;'>".$_GET['update_username']."</h6>";
+        echo "<h6>".$_GET['update_username']."</h6>";
       }
     ?>
     <h2>Current Balance from all Expenses</h2>
