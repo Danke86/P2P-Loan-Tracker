@@ -1,5 +1,5 @@
 <?php
-session_start(); // Add this line to start the session
+include('login_checker.php'); // Add this line to start the session
 include('../config.php');
 
 // Retrieve group ID from form submission
