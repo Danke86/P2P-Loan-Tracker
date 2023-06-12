@@ -4,6 +4,11 @@
   <h1 id="main_title">VIEW EXPENSES</h1>
   <div class="container">
     <div class="box1">
+    <?php
+      if(isset($_GET['update_username'])) {
+        echo "<h6>".$_GET['update_username']."</h6>";
+      }
+    ?>
     <h2>Current Balance from all Expenses</h2>
     </div>
     <table class="table table-hover table-bordered table-str">

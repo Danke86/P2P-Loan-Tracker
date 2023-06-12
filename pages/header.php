@@ -45,6 +45,7 @@ TO USE: include header.php ?> -->
           $row = mysqli_fetch_assoc($result);
           echo $row['uname'];
         ?>
+        <i class="fas fa-edit" data-bs-toggle="modal" data-bs-target="#updateUsername"></i>
       </h1>
     </header>
     <div class="menu">
@@ -55,3 +56,31 @@ TO USE: include header.php ?> -->
       <div class="item"><a href="../backend/logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a></div>
     </div>
   </div>
+
+  <form action="../backend/update_username.php" method="POST">
+    <div class="modal fade" id="updateUsername" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Change username</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label for="update_username">New username:</label>
+              <input type="text" name="update_username" class="form-control">
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-success" name="update_user" value="Change">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>

@@ -6,13 +6,13 @@
     <div class="box1">
     <h2>Current Balance from all Friend Expenses</h2>
     </div>
-    <table class="table table-hover table-bordered table-str">
+    <table id="obTable" class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Friend</th>
-          <th>Amount Friend Owed to You</th>
-          <th>Amount You Owe to Friend</th>    
-          <th>Oustanding Balance</th>          
+          <th>Amount you owe</th>
+          <th>Amount owed to you</th>    
+          <th>Outstanding Balance</th>          
         </tr>
       </thead>
       <tbody>
@@ -85,12 +85,20 @@
             ?>
             <td>
               <?php 
-              if($user> 0){
+              if ($user> 0){
                 echo "<span class='negative-bal-text'> $user </span>";
-              }else{
+              } else{
                 echo "<span> $user </span>";
               }
-              
+              ?>
+            </td>
+            <td>
+              <?php 
+                if ($friend > 0){
+                  echo "<span class='positive-bal-text'> $friend </span>";
+                } else{
+                  echo "<span> $friend </span>";
+                }
               ?>
             </td>
             <td>
@@ -148,8 +156,8 @@
             echo "<td>";
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
-            echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
             echo "<button type='button' class='btn btn-success add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal-" . $row['userid'] . "'>Add to Group</button>";
+            echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
@@ -199,6 +207,22 @@
         ?>
       </tbody>
     </table>
+
+    <!-- get remove friend message -->
+    <?php
+      if(isset($_GET['remove_friend'])) {
+        echo "<h6>".$_GET['remove_friend']."</h6>";
+      }
+    
+      if(isset($_GET['friend_message'])) {
+        echo "<h6>".$_GET['friend_message']."</h6>";
+      }
+      
+      if(isset($_GET['add_friend_group'])) {
+        echo "<h6>".$_GET['add_friend_group']."</h6>";
+      }
+    ?>
+
   </div>
 </section>
 
@@ -238,7 +262,7 @@
   </div>
 </form>
 
-<!-- JavaScript -->
+<!-- JavaScript
 <script>
   $(document).ready(function() {
     // Friend List Search
@@ -249,6 +273,6 @@
       });
     });
   });
-</script>
+</script> -->
 
 <?php include('footer.php'); ?>
