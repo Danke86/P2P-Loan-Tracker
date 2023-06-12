@@ -86,6 +86,24 @@
         ?>
       </tbody>
     </table>
+
+    <?php
+      if(isset($_GET['delete_group'])) {
+        echo "<h6>".$_GET['delete_group']."</h6>";
+      };
+
+      if(isset($_GET['edit_group'])) {
+        echo "<h6>".$_GET['edit_group']."</h6>";
+      }
+      
+      if(isset($_GET['create_group'])) {
+        echo "<h6>".$_GET['create_group']."</h6>";
+      }
+
+      if(isset($_GET['leave_group'])) {
+        echo "<h6>".$_GET['leave_group']."</h6>";
+      }
+    ?>
   </div>
 </section>
 

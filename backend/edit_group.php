@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die("Query failed: " . mysqli_stmt_error($stmt));
   } else {
     // Redirect back to the groups page
-    header("Location: ../pages/groups.php");
+    header('location:../pages/groups.php?edit_group=Edited group name successfully!');
     exit();
   }
 

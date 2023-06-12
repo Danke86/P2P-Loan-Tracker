@@ -25,8 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Error creating group: " . mysqli_error($mysqli);
   } else {
     // Group creation successful
-    echo "Group created successfully!";
-    header("Location: ../pages/groups.php");
+    header("Location: ../pages/groups.php?create_group=Group created successfully!");
     exit();
   }
 }

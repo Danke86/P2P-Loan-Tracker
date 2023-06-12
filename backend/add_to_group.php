@@ -14,13 +14,9 @@ $insertResult = mysqli_query($mysqli, $insertQuery);
 $updateResult = mysqli_query($mysqli, $updateQuery);
 
 if (!$insertResult && !$updateResult) {
-  // Error
-  echo "Failed to add friend to group. Please try again.";
-
+  header('location:../pages/friends.php?add_friend_group=Failed to add friend to group. Please try again.');
 } else {
-  // Error
-  echo "Friend added to group successfully.";
-  header("Location: ../pages/friends.php");
+  header('location:../pages/friends.php?add_friend_group=Friend added to group successfully!');
   exit();
 }
 ?>

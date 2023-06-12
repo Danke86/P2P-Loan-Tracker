@@ -19,9 +19,7 @@ $result = mysqli_query($mysqli, $updateQuery);
 if (!$result && !$result) {
   die("Query failed: " . mysqli_error($mysqli));
 } else {
-  echo "You have been removed from the group.";
-  //redirect back to the groups page here if desired
-  header("Location: ../pages/groups.php");
+  header("Location: ../pages/groups.php?leave_group=You have successfully left the group.");
   exit();
 }
 ?>

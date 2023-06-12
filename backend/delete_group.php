@@ -16,10 +16,8 @@ $result_group = mysqli_query($mysqli, $deleteQuery_group);
 if(!$result_leave && !$result_group) {
     die("Query failed: " . mysqli_error($mysqli));
 } else {
-    echo "You have deleted the group";
-
     //redirect back to group page
-    header("Location: ../pages/groups.php");
+    header('location:../pages/groups.php?delete_group=Group deleted successfully!');
     exit();
 }
 ?>
