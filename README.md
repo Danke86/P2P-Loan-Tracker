@@ -48,7 +48,7 @@ P2P is a lending tracker app to track loans or expenses you do together with oth
 2. Clone the repository on the `htdocs` folder in your XAMPP install location
    ```bash
    cd xampp/htdocs
-   git clone https://github.com/Danke86/group6_project127
+   git clone https://github.com/Danke86/group6_project127.git
    ```
 3. Open the XAMPP Control Panel and start `Apache` and `MySQL` modules
     <div align = "center">
