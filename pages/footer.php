@@ -50,6 +50,16 @@ TO USE: include footer.php at the bottom of your file-->
       });
     });
 
+    // filter out rows where oustanding balance == 0
+    $(document).ready(function() {
+      $("#obTable tbody tr").each(function() {
+        var value = parseInt($(this).find("td:eq(3)").text());
+        if (value === 0) {
+          $(this).hide();
+        }
+      });
+    });
+
     // change value of notfriend_names every input to the friendid as the value in options is the uname
     $('input[name=notfriend_names]').on('input',function() {
       var selectedOption = $('option[value="'+$(this).val()+'"]');

@@ -6,13 +6,13 @@
     <div class="box1">
     <h2>Current Balance from all Friend Expenses</h2>
     </div>
-    <table class="table table-hover table-bordered table-str">
+    <table id="obTable" class="table table-hover table-bordered table-str">
       <thead>
         <tr>
           <th>Friend</th>
-          <th>Amount Friend Owed to You</th>
-          <th>Amount You Owe to Friend</th>    
-          <th>Oustanding Balance</th>          
+          <th>Amount you owe</th>
+          <th>Amount owed to you</th>    
+          <th>Outstanding Balance</th>          
         </tr>
       </thead>
       <tbody>
@@ -22,67 +22,62 @@
           $friends = "SELECT u.userid, u.uname from befriends b join users u on b.friendid=u.userid where b.userid=".$_SESSION['user_id']."";
           $friendsR = mysqli_query($mysqli, $friends);
           while($row = mysqli_fetch_assoc($friendsR)){
+            // first select the expenses of current user
+            // from there, get the expenses current user had with friend (where current user is the payerid) 
+            // get the sum amount of expenses
+            $friend_expenseQ = "SELECT COALESCE(sum(amount),0) 'amount' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid']."";
+            $friend_expenseR = mysqli_query($mysqli, $friend_expenseQ);
+            $friend_expense = mysqli_fetch_assoc($friend_expenseR);
+            
+            // first select the expenses of current user
+            // from there, get the expenses current user had with friend (where current user is the payerid, because it means friendid is the one needed to pay) 
+            // get the sum amount of payments by friend in those expenses they made tgt
+            $friend_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid'].") and userid=".$row['userid']."";
+            $friend_paymentR = mysqli_query($mysqli, $friend_paymentQ);
+            $friend_payment = mysqli_fetch_assoc($friend_paymentR);
+
+            $friend = $friend_expense['amount'] - $friend_payment['amount'];
+
+
+            // first select the expenses of current user
+            // from there, get the expenses current user had with friend (where friend is the payerid) 
+            // get the sum amount of expenses
+            $user_expenseQ = "SELECT COALESCE(sum(amount),0) 'amount' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." and expense_type='friend') and userid=".$_SESSION['user_id']."";
+            $user_expenseR = mysqli_query($mysqli, $user_expenseQ);
+            $user_expense = mysqli_fetch_assoc($user_expenseR);
+
+            // first select the expenses of current user
+            // from there, get the expenses current user had with friend (where friend is the payerid, current user is the one who needed to pay) 
+            // get the sum amount of payments by current user in those expenses they made tgt
+            $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in 
+            (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in 
+            (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." 
+            and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";
+            $user_paymentR = mysqli_query($mysqli, $user_paymentQ);
+            $user_payment = mysqli_fetch_assoc($user_paymentR);
+
+            $user = $user_expense['amount'] - $user_payment['amount'];
         ?>
           <tr>  
             <td>
               <?php echo $row['uname'] ?>
             </td>
-            <?php 
-              // first select the expenses of current user
-              // from there, get the expenses current user had with friend (where current user is the payerid) 
-              // get the sum amount of expenses
-              $friend_expenseQ = "SELECT COALESCE(sum(amount),0) 'amount' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid']."";
-              $friend_expenseR = mysqli_query($mysqli, $friend_expenseQ);
-              $friend_expense = mysqli_fetch_assoc($friend_expenseR);
-              
-              // first select the expenses of current user
-              // from there, get the expenses current user had with friend (where current user is the payerid, because it means friendid is the one needed to pay) 
-              // get the sum amount of payments by friend in those expenses they made tgt
-              $friend_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid'].") and userid=".$row['userid']."";
-              $friend_paymentR = mysqli_query($mysqli, $friend_paymentQ);
-              $friend_payment = mysqli_fetch_assoc($friend_paymentR);
-
-              $friend = $friend_expense['amount'] - $friend_payment['amount'];
-            ?>
             <td>
               <?php 
-                if($friend > 0){
-                  echo "<span class='positive-bal-text'> $friend </span>";
-                }else{
-                  echo "<span> $friend </span>";
-                }
-              
-              ?>
-              
-            </td>
-            <?php 
-              // first select the expenses of current user
-              // from there, get the expenses current user had with friend (where friend is the payerid) 
-              // get the sum amount of expenses
-              $user_expenseQ = "SELECT COALESCE(sum(amount),0) 'amount' from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." and expense_type='friend') and userid=".$_SESSION['user_id']."";
-              $user_expenseR = mysqli_query($mysqli, $user_expenseQ);
-              $user_expense = mysqli_fetch_assoc($user_expenseR);
-
-              // first select the expenses of current user
-              // from there, get the expenses current user had with friend (where friend is the payerid, current user is the one who needed to pay) 
-              // get the sum amount of payments by current user in those expenses they made tgt
-              $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'amount' from payments where expenseid in 
-              (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in 
-              (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." 
-              and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";
-              $user_paymentR = mysqli_query($mysqli, $user_paymentQ);
-              $user_payment = mysqli_fetch_assoc($user_paymentR);
-
-              $user = $user_expense['amount'] - $user_payment['amount'];
-            ?>
-            <td>
-              <?php 
-              if($user> 0){
+              if ($user> 0){
                 echo "<span class='negative-bal-text'> $user </span>";
-              }else{
+              } else{
                 echo "<span> $user </span>";
               }
-              
+              ?>
+            </td>
+            <td>
+              <?php 
+                if ($friend > 0){
+                  echo "<span class='positive-bal-text'> $friend </span>";
+                } else{
+                  echo "<span> $friend </span>";
+                }
               ?>
             </td>
             <td>
@@ -140,8 +135,8 @@
             echo "<td>";
             echo "<form method='post' action='../backend/remove_friend.php'>";
             echo "<input type='hidden' name='friendid' value='" . $row['userid'] . "' />";
-            echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
             echo "<button type='button' class='btn btn-success add-to-group-btn' data-friendid='" . $row['userid'] . "' data-bs-toggle='modal' data-bs-target='#addToGroupModal-" . $row['userid'] . "'>Add to Group</button>";
+            echo "<button type='submit' class='btn btn-danger'>Unfriend</button>";
             echo "</form>";
             echo "</td>";
             echo "</tr>";
@@ -191,6 +186,22 @@
         ?>
       </tbody>
     </table>
+
+    <!-- get remove friend message -->
+    <?php
+      if(isset($_GET['remove_friend'])) {
+        echo "<h6>".$_GET['remove_friend']."</h6>";
+      }
+    
+      if(isset($_GET['friend_message'])) {
+        echo "<h6>".$_GET['friend_message']."</h6>";
+      }
+      
+      if(isset($_GET['add_friend_group'])) {
+        echo "<h6>".$_GET['add_friend_group']."</h6>";
+      }
+    ?>
+
   </div>
 </section>
 
@@ -230,7 +241,7 @@
   </div>
 </form>
 
-<!-- JavaScript -->
+<!-- JavaScript
 <script>
   $(document).ready(function() {
     // Friend List Search
@@ -241,6 +252,6 @@
       });
     });
   });
-</script>
+</script> -->
 
 <?php include('footer.php'); ?>
