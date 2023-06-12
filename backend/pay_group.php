@@ -37,10 +37,10 @@
             }
 
             //check if sobra da payment
-            $query1 = "SELECT (e.amount) - COALESCE(SUM(p.amount), 0) AS totaldebt 
+            $query1 = "SELECT (e.amount) - COALESCE((SELECT SUM(COALESCE(p.amount,0)) FROM payments c WHERE c.userid = ".$_SESSION['user_id']."),0) AS totaldebt 
                         FROM expenses AS e 
                         LEFT JOIN payments AS p ON e.expenseid = p.expenseid 
-                        WHERE e.expenseid = $expenseid 
+                        WHERE e.expenseid = $expenseid
                         GROUP BY e.expenseid";
             $result1 = mysqli_query($mysqli, $query1);
             $debt = mysqli_fetch_assoc($result1);
