@@ -41,8 +41,8 @@
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where current user is the payerid, because it means friendid is the one needed to pay) 
               // get the sum amount of payments by friend in those expenses they made tgt
-              $friend_paymentQ = "SELECT COALESCE(sum(amount),0) 'total' from payments where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid'].") and userid=".$row['userid']."";
-              // $friend_paymentQ = "SELECT COALESCE(SUM(p.amount),0) 'total' FROM payments p JOIN expenses e ON p.expenseid = e.expenseid WHERE e.payerid = $userid AND p.userid = $friendid AND e.expense_type = 'friend'";
+              // $friend_paymentQ = "SELECT COALESCE(sum(amount),0) 'total' from payments where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$_SESSION['user_id']." and payerid=".$_SESSION['user_id']." and expense_type='friend') and userid=".$row['userid'].") and userid=".$row['userid']."";
+              $friend_paymentQ = "SELECT COALESCE(SUM(p.amount),0) 'total' FROM payments p JOIN expenses e ON p.expenseid = e.expenseid WHERE e.payerid = $userid AND p.userid = $friendid AND e.expense_type = 'friend'";
               $friend_paymentR = mysqli_query($mysqli, $friend_paymentQ);
               $friend_payment = mysqli_fetch_assoc($friend_paymentR);
 
@@ -62,11 +62,11 @@
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where friend is the payerid, current user is the one who needed to pay) 
               // get the sum amount of payments by current user in those expenses they made tgt
-              $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'total' from payments where expenseid in 
-              (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in 
-              (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." 
-              and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";
-              // $user_paymentQ = "SELECT COALESCE(SUM(p.amount),0) 'total' FROM payments p JOIN expenses e ON p.expenseid = e.expenseid WHERE e.payerid = $friendid AND p.userid = $userid AND e.expense_type = 'friend'";
+              // $user_paymentQ = "SELECT COALESCE(sum(amount),0) 'total' from payments where expenseid in 
+              // (SELECT expenseid from user_incurs_expense natural join expenses where expenseid in 
+              // (SELECT expenseid from user_incurs_expense natural join expenses where userid = ".$row['userid']." and payerid=".$row['userid']." 
+              // and expense_type='friend') and userid=".$_SESSION['user_id'].") and userid=".$_SESSION['user_id']."";
+              $user_paymentQ = "SELECT COALESCE(SUM(p.amount),0) 'total' FROM payments p JOIN expenses e ON p.expenseid = e.expenseid WHERE e.payerid = $friendid AND p.userid = $userid AND e.expense_type = 'friend'";
               $user_paymentR = mysqli_query($mysqli, $user_paymentQ);
               $user_payment = mysqli_fetch_assoc($user_paymentR);
 
