@@ -9,8 +9,8 @@
       <thead>
         <tr>
           <th>Group</th>
-          <th>Amount You owe</th>
-          <th>Amount owed to Group</th>    
+          <th>Amount you owe</th>
+          <th>Amount owed by group</th>    
           <th>Oustanding Balance</th>          
         </tr>
       </thead>
