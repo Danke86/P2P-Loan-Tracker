@@ -49,17 +49,7 @@
               // $friend = $friend_expense['amount'] - $friend_payment['amount'];
               $friend = $friend_expense['total'] - $friend_payment['total'];
             ?>
-            <td>
-              <?php 
-                if($friend > 0){
-                  echo "<span class='positive-bal-text'> $friend </span>";
-                }else{
-                  echo "<span> $friend </span>";
-                }
-              
-              ?>
-              
-            </td>
+            
             <?php 
               // first select the expenses of current user
               // from there, get the expenses current user had with friend (where friend is the payerid) 
@@ -94,12 +84,14 @@
             </td>
             <td>
               <?php 
-                if ($friend > 0){
+                if($friend > 0){
                   echo "<span class='positive-bal-text'> $friend </span>";
-                } else{
+                }else{
                   echo "<span> $friend </span>";
                 }
+              
               ?>
+              
             </td>
             <td>
               <?php
