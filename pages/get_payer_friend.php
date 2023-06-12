@@ -1,7 +1,7 @@
 <?php include('../config.php'); ?>
-<?php include('login_checker.php'); ?>
+<?php include('../backend/login_checker.php'); ?>
 <?php 
-
+  // session_start();
   if(isset($_POST['friendid'])) {
     $friendid = $_POST['friendid'];
 
