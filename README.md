@@ -46,17 +46,21 @@ P2P is a lending tracker app to track loans or expenses you do together with oth
 
 1. Install XAMPP on your device
 2. Clone the repository on the `htdocs` folder in your XAMPP install location
-   ```sh
+   ```bash
    cd xampp/htdocs
    git clone https://github.com/github_username/repo_name.git
    ```
 3. Open the XAMPP Control Panel and start `Apache` and `MySQL` modules
-  <img src="images/install-guide/xampp-cp.png" alt="xampp" width="80" height="80">
-  * Note: Please make sure that port `3306` is available or terminate `mysqld.exe` in task manager
+    <div align = "center">
+      <img src="images/install-guide/xampp-cp.png" alt="xampp">
+    </div>
+  - Note: Please make sure that port `3306` is available or terminate `mysqld.exe` in task manager
 4. Open MySQL admin and import `p2pschema.sql`
-  <img src="images/install-guide/import-schema.png" alt="p2p-schema" width="80" height="80">
-5. Open up the browser and go to
-    ```sh
+    <div>
+      <img src="images/install-guide/import-schema.png" alt="p2p-schema" >
+    </div>
+5. Open up a browser and go to
+    ```shell
     localhost/group6_project127/index.php
     ```
 
@@ -65,9 +69,9 @@ P2P is a lending tracker app to track loans or expenses you do together with oth
 
 ## Project Developers
 
-Njord Daniel P. Cinense - [Danke86](https://github.com/Danke86)
-Aira Nicole Natividad - [airanatividad](https://github.com/airanatividad)
-Jaymart G. Latigay - [jaymart-latigay](https://github.com/jaymart-latigay) 
+* Njord Daniel P. Cinense - [Danke86](https://github.com/Danke86)
+* Aira Nicole Natividad - [airanatividad](https://github.com/airanatividad)
+* Jaymart G. Latigay - [jaymart-latigay](https://github.com/jaymart-latigay) 
 
 Project Link: [P2P](https://github.com/Danke86/group6_project127)
 
